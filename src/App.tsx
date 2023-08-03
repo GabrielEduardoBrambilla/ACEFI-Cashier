@@ -1,11 +1,15 @@
-import './styles/App.css'
-import {SignIn} from "./pages/SignIn"
+import { SignIn } from './pages/SignIn'
+import { ThemeProvider } from 'styled-components'
+import Theme from './styles/Theme.js'
+import GlobalStyles from './styles/global'
 
 function App() {
-
   return (
     <>
-    <SignIn  />
+      <ThemeProvider theme={Theme}>
+        <GlobalStyles />
+        <SignIn />
+      </ThemeProvider>
     </>
   )
 }
