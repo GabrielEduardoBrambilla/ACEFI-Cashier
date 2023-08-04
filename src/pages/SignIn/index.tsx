@@ -12,7 +12,9 @@ export const SignIn: FC<SignInProps> = () => {
         <p> CCS</p>
         <img src={CapivaraOnLake} alt="" />
       </div>
-      <Form />
+      <div className="section-2">
+        <Form singIn ActionButton="Login" />
+      </div>
     </Container>
   )
 }

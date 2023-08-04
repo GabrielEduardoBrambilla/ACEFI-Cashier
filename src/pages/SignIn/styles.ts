@@ -1,11 +1,13 @@
 import styled from 'styled-components'
 
-export const Container = styled.form`
+export const Container = styled.div`
   display: flex;
+  flex-direction: column;
+  /* height: 100vh; */
   gap: 16px;
-  padding: 20px;
   font-size: 24px !important;
   align-items: center;
+  justify-content: space-between;
   background-color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
 
   div {
@@ -30,5 +32,18 @@ export const Container = styled.form`
 
       margin: 4px 0 0 0;
     }
+  }
+  .section-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: auto;
+    padding: 0 12px;
+    padding-bottom: 40px;
+    background-color: ${({ theme }) => theme.COLORS.BACKGROUND[100]};
+  }
+  form {
   }
 `
