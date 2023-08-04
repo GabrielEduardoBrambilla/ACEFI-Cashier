@@ -8,7 +8,7 @@ export const Container = styled.form`
   padding: 20px;
   font-size: 24px !important;
   background-color: ${({ theme }) => theme.COLORS.BACKGROUND[100]};
-
+  border-radius: 9px;
   > button {
     height: 42px;
     background-color: ${({ theme }) => theme.COLORS.BUTTON[100]};

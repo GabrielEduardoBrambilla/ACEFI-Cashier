@@ -1,15 +1,14 @@
 import { FC } from 'react'
 import { Container } from './styles'
 
-interface TitleProps {
-  title: string
+interface FormProps {
   subtitle?: string
   signUp?: boolean
   singIn?: boolean
   newProduct?: boolean
 }
 
-export const Form: FC<TitleProps> = (props: TitleProps) => {
+export const Form: FC<FormProps> = ({ signUp }: FormProps) => {
   return (
     <Container>
       <div className="relative h-11 w-full min-w-[200px]">
@@ -30,7 +29,7 @@ export const Form: FC<TitleProps> = (props: TitleProps) => {
           Senha
         </label>
       </div>
-      {!props.signUp && (
+      {!signUp && (
         <div className="relative h-11 w-full min-w-[200px]">
           <input
             className="peer h-full w-full border-b-4 border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-lg font-normal text-white outline outline-0 transition-all placeholder-shown:border-white focus:border-white focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
@@ -41,6 +40,10 @@ export const Form: FC<TitleProps> = (props: TitleProps) => {
           </label>
         </div>
       )}
+      <span>
+        <a href="">Novo? Registre-se aqui!</a>
+      </span>
+      <button>{/* UploadIcon */}</button>
       <button>Registrar-se</button>
     </Container>
   )
