@@ -1,18 +1,14 @@
-import { Form } from '../../components/Form'
+import { Form } from '../../components/Form/index.js'
 import { FC } from 'react'
 import CapivaraOnLake from '../../assets/Cartoon.png'
-import { Container } from './styles'
+import { Container } from './styles.js'
 import { api } from '../../services/api.js'
 
-interface SignInProps {}
+interface SignUpProps {}
 
-export const SignIn: FC<SignInProps> = () => {
-  function handleSignIn(user_id: number) {
-    api.post('/api/sign', {
-      data: {
-        user: user_id
-      }
-    })
+export const SignUp: FC<SignUpProps> = () => {
+  function handleSignIn() {
+    api.post('/api/sign')
   }
 
   return (
@@ -22,7 +18,7 @@ export const SignIn: FC<SignInProps> = () => {
         <img src={CapivaraOnLake} alt="" />
       </div>
       <div className="section-2">
-        <Form onSubmit={handleSignIn} singIn ActionButton="Login" />
+        <Form singIn ActionButton="Login" />
       </div>
     </Container>
   )

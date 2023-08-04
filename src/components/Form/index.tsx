@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { FormContainer, Container } from './styles'
 
 interface FormProps {
+  onSubmit: () => void
   ActionButton: string
   waringMsn?: string
   formTitle?: string

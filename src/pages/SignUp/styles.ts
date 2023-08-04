@@ -21,10 +21,9 @@ export const Container = styled.div`
       line-height: normal;
     }
     > img {
-      width: 100%;
-      height: fit-content;
-      margin: 10px;
-      object-fit: cover;
+      width: 586px;
+      height: 254px;
+      object-fit: fit;
       background-color: ${({ theme }) => theme.COLORS.BUTTON[100]};
 
       border-radius: 60px;
