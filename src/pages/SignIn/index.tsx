@@ -7,11 +7,9 @@ import { api } from '../../services/api.js'
 interface SignInProps {}
 
 export const SignIn: FC<SignInProps> = () => {
-  function handleSignIn(user_id: number) {
+  function handleSignIn() {
     api.post('/api/sign', {
-      data: {
-        user: user_id
-      }
+      data: {}
     })
   }
 
