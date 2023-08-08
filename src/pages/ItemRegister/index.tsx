@@ -4,6 +4,7 @@ import { Container } from './styles.js'
 import { api } from '../../services/api.js'
 import { FaStore, FaUserCircle } from 'react-icons/fa'
 import { BsFiletypeXlsx } from 'react-icons/bs'
+import { Card } from '../../components/Card/index.js'
 
 interface ItemRegisterProps {}
 
@@ -16,7 +17,7 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
 
   return (
     <Container>
-      <div className="items-wrapper"></div>
+      <div className="items-wrapper">{<Card />}</div>
       <div className="right-section">
         <nav>
           {/* XLS */}
