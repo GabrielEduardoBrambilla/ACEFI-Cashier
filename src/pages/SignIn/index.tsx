@@ -15,12 +15,17 @@ export const SignIn: FC<SignInProps> = () => {
 
   return (
     <Container className="flex justify-center  h-[100vh] bg-purple-700">
-      <div>
+      <div className="logo-section">
         <p> CCS</p>
         <img src={CapivaraOnLake} alt="" />
       </div>
-      <div className="section-2">
-        <Form onSubmit={handleSignIn} singIn ActionButton="Login" />
+      <div className="form-section">
+        <Form
+          waringMsn="Registrado com sucesso"
+          onSubmit={handleSignIn}
+          signIn
+          ActionButton="Login"
+        />
       </div>
     </Container>
   )
