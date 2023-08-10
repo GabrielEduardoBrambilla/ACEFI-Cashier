@@ -1,4 +1,3 @@
-import { SignIn } from './pages/SignIn'
 import { ThemeProvider } from 'styled-components'
 import Theme from './styles/Theme'
 import GlobalStyles from './styles/global'
@@ -9,7 +8,7 @@ function App() {
     <>
       <ThemeProvider theme={Theme}>
         <GlobalStyles></GlobalStyles>
-        <SignIn />
+        <ItemRegister />
       </ThemeProvider>
     </>
   )

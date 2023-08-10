@@ -10,7 +10,12 @@ export const Container = styled.div`
   justify-content: space-between;
   background-color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
 
-  div {
+  .logo-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    margin: 10px;
     p {
       color: ${({ theme }) => theme.COLORS.FONT[200]};
 
@@ -20,18 +25,13 @@ export const Container = styled.div`
       font-weight: 700;
       line-height: normal;
     }
-  }
-  /* height: 100vh; */
-  .logo-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
     > img {
+      align-self: center;
       flex-shrink: 0;
-
-      width: 289.365px;
-      height: 125.424px;
+      width: 95%;
+      margin: 0 0 0 10px;
+      max-width: 489.365px;
+      max-height: 225.424px;
 
       font-weight: bold;
 
@@ -62,9 +62,9 @@ export const Container = styled.div`
       margin: auto;
       > img {
         font-size: 32px;
-        width: 586px;
-        height: 254px;
 
+        height: 254px;
+        max-width: 586px;
         font-weight: bold;
 
         object-fit: cover;

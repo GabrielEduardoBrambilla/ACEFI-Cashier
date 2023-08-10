@@ -17,21 +17,57 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
 
   return (
     <Container>
-      <div className="items-wrapper">{<Card />}</div>
+      <div className="items-wrapper">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </div>
       <div className="right-section">
         <nav>
-          {/* XLS */}
           <BsFiletypeXlsx />
 
           <div className="store-btn">
             <p>Ir para loja</p>
-            {/* Store icons */}
             <FaStore />
           </div>
           <FaUserCircle />
         </nav>
         <div className="form-wrapper">
-          <Form onSubmit={handleSignIn} singIn ActionButton="Login" />
+          <Form
+            onSubmit={handleSignIn}
+            newProduct
+            formTitle="Registrar um novo Item"
+            ActionButton="Registrar item"
+          />
         </div>
       </div>
     </Container>

@@ -1,11 +1,6 @@
 import { FC } from 'react'
-import {
-  FormContainer,
-  Container,
-  StyledInputWrapper,
-  StyledInput
-} from './styles'
-
+import { FormContainer, Container } from './styles'
+import { FiUpload } from 'react-icons/fi'
 interface FormProps {
   onSubmit: () => void
   ActionButton: string
@@ -31,19 +26,19 @@ export const Form: FC<FormProps> = ({
           <p>{waringMsn}</p>
         </div>
       )}
-      <FormContainer>
-        {formTitle && <p>{formTitle}</p>}
-        <StyledInputWrapper>
-          <StyledInput placeholder="E-mail" />
-        </StyledInputWrapper>
+      <FormContainer product={newProduct}>
+        {formTitle && <p className="formTitle">{formTitle}</p>}
+        <div>
+          <input placeholder="E-mail" />
+        </div>
 
-        <StyledInputWrapper>
-          <StyledInput placeholder="Senha" />
-        </StyledInputWrapper>
+        <div>
+          <input placeholder="Senha" />
+        </div>
         {signUp && (
-          <StyledInputWrapper>
-            <StyledInput placeholder="Senha" />
-          </StyledInputWrapper>
+          <div>
+            <input placeholder="Senha" />
+          </div>
         )}
 
         {signIn && (
@@ -53,8 +48,9 @@ export const Form: FC<FormProps> = ({
         )}
 
         {newProduct && (
-          <button>
+          <button className="uploadButton">
             {/* UploadIcon */}
+            <FiUpload />
             Imagem representativa
           </button>
         )}

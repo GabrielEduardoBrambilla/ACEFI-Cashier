@@ -7,18 +7,20 @@ import { api } from '../../services/api.js'
 interface SignUpProps {}
 
 export const SignUp: FC<SignUpProps> = () => {
-  function handleSignIn() {
-    api.post('/api/sign')
+  function handleSignUp() {
+    api.post('/api/sign', {
+      data: {}
+    })
   }
 
   return (
     <Container className="flex justify-center  h-[100vh] bg-purple-700">
-      <div>
+      <div className="logo-section">
         <p> CCS</p>
         <img src={CapivaraOnLake} alt="" />
       </div>
-      <div className="section-2">
-        <Form singIn ActionButton="Login" />
+      <div className="form-section">
+        <Form onSubmit={handleSignUp} signUp ActionButton="Registrar-se" />
       </div>
     </Container>
   )
