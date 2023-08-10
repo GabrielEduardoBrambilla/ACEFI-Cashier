@@ -9,6 +9,8 @@ interface FormProps {
   signUp?: boolean
   signIn?: boolean
   newProduct?: boolean
+  input1Title?: string
+  input2Title?: string
 }
 
 export const Form: FC<FormProps> = ({
@@ -17,7 +19,9 @@ export const Form: FC<FormProps> = ({
   signIn,
   formTitle,
   waringMsn,
-  ActionButton
+  ActionButton,
+  input1Title,
+  input2Title
 }: FormProps) => {
   return (
     <Container>
@@ -29,11 +33,11 @@ export const Form: FC<FormProps> = ({
       <FormContainer product={newProduct}>
         {formTitle && <p className="formTitle">{formTitle}</p>}
         <div>
-          <input placeholder="E-mail" />
+          <input placeholder={input1Title || 'E-mail'} />
         </div>
 
         <div>
-          <input placeholder="Senha" />
+          <input placeholder={input2Title || 'Senha'} />
         </div>
         {signUp && (
           <div>
