@@ -1,65 +1,83 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode
+} from 'react'
 import { api } from '../services/api'
-export const AuthContext = createContext({})
 
-function AuthProvider({ children }) {
-  const [data, setData] = useState({
+interface User {
+  id: number
+  name: string
+  email: string
+  // Add other user properties as needed
+}
+
+interface AuthContextData {
+  user: User | null
+  token: string | null
+  isAdmin: boolean
+  signIn: (credentials: { email: string; password: string }) => Promise<void>
+  signOut: () => void
+}
+
+interface AuthProviderProps {
+  children: ReactNode
+}
+
+export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
+
+function AuthProvider({ children }: AuthProviderProps) {
+  const [data, setData] = useState<AuthContextData>({
     user: null,
     token: null,
-    isAdmin: false // Default value
-  });
+    isAdmin: false,
+    signIn: async ({ email, password }) => {
+      try {
+        const response = await api.post('/sessions', { email, password })
+        const { user, token } = response.data
 
-  async function signIn({ email, password }) {
+        localStorage.setItem('@ccsystem:user', JSON.stringify(user))
+        localStorage.setItem('@ccsystem:token', token)
 
-    try {
-      const response = await api.post("/sessions", { email: email, password: password })
-      const { user, token } = response.data
-
-      localStorage.setItem("@rocketfood:user", JSON.stringify(user))
-      localStorage.setItem("@rocketfood:token", token)
-
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
-      setData({ user, token })
-
-    } catch (error) {
-      if (error.response) {
-        alert(error.response.data.message)
-      } else {
-        alert("Not possible to login")
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        setData({ user, token, isAdmin: user.is_Admin === 1 })
+      } catch (error) {
+        if (error.response) {
+          alert(error.response.data.message)
+        } else {
+          alert('Not possible to login')
+        }
       }
+    },
+    signOut: () => {
+      localStorage.removeItem('@ccsystem:token')
+      localStorage.removeItem('@ccsystem:user')
+      setData({ user: null, token: null, isAdmin: false })
     }
-  }
+  })
 
-  function signOut() {
-    localStorage.removeItem("@rocketfood:token")
-    localStorage.removeItem("@rocketfood:user")
-
-    setData({})
-  }
-
-  const token = localStorage.getItem('@rocketfood:token')
-  const user = localStorage.getItem('@rocketfood:user')
+  const token = localStorage.getItem('@ccsystem:token')
+  const user = localStorage.getItem('@ccsystem:user')
 
   useEffect(() => {
-
     if (token && user) {
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`
-      const parsedUser = JSON.parse(user);
-      const userInBoolean = parsedUser.is_Admin === 0 ? false : true;
+      const parsedUser: User = JSON.parse(user)
       setData({
-        token,
         user: parsedUser,
-        isAdmin: userInBoolean
+        token,
+        isAdmin: parsedUser.is_Admin === 1
       })
     }
   }, [token, user])
 
-  return <AuthContext.Provider value={{ signIn, signOut, user: data.user, isAdmin: data.isAdmin }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>
 }
 
 function useAuth() {
   const context = useContext(AuthContext)
-
   return context
 }
 
