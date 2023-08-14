@@ -5,6 +5,6 @@ import { AppRoutes } from './app.routes'
 import { AuthRoutes } from './auth.routes'
 
 export const Routes = () => {
-  const test = false
+  const test = true
   return <BrowserRouter>{test ? <AppRoutes /> : <AuthRoutes />}</BrowserRouter>
 }

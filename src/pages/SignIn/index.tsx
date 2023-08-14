@@ -7,10 +7,19 @@ import { api } from '../../services/api.js'
 interface SignInProps {}
 
 export const SignIn: FC<SignInProps> = () => {
-  function handleSignIn() {
-    api.post('/api/sign', {
-      data: {}
-    })
+  function handleSignIn(email: string, password: string) {
+    api
+      .post('/signin', {
+        email: email,
+        senha: password
+      })
+      .then(function (response) {
+        console.log('SUCESSFUL RESPONSE')
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
   }
 
   return (

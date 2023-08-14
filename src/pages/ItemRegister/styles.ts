@@ -10,9 +10,10 @@ export const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    margin: 15px;
+    margin: 15px 0;
+    padding: 0 15px;
     align-content: flex-start;
-    justify-content: flex-start;
+    justify-content: center;
     max-height: 100vh;
     overflow-y: scroll;
   }
