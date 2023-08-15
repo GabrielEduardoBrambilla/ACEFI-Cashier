@@ -7,12 +7,23 @@ import { api } from '../../services/api.js'
 interface SignUpProps {}
 
 export const SignUp: FC<SignUpProps> = () => {
-  function handleSignUp() {
-    api.post('/api/sign', {
-      data: {}
-    })
-  }
+  function handleSignUp(data: any) {
+    const { email, nome, password } = data
 
+    api
+      .post('/signup', {
+        nome: nome,
+        email: email,
+        senha: password
+      })
+      .then(function (response) {
+        console.log('SUCESSFUL RESPONSE')
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+  }
   return (
     <Container className="flex justify-center  h-[100vh] bg-purple-700">
       <div className="logo-section">

@@ -1,10 +1,9 @@
 import { FC, useState } from 'react'
 import { FormContainer, Container } from './styles'
 import { FiUpload } from 'react-icons/fi'
+
 interface FormProps {
-  onSubmit:
-    | ((email: string, password: string) => void) // Sign-in scenario
-    | ((arg1: any, arg2: any) => void)
+  onSubmit: (formData: any) => void // You can define a generic type for formData if needed
   ActionButton: string
   waringMsn?: string
   formTitle?: string
@@ -26,26 +25,42 @@ export const Form: FC<FormProps> = ({
   input2Title,
   onSubmit
 }: FormProps) => {
-  const [data, setData] = useState([])
-  const [email, setEmail] = useState('')
-  const [confirmationPassword, setConfirmationPassword] = useState('')
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const [password, setPassword] = useState('')
+  const [data, setData] = useState({
+    email: '',
+    password: '',
+    nome: '',
+    selectedFile: null as File | null // Initialize the file data as null
+    // Add more fields as needed
+  })
 
-  function handleSubmit(e: { preventDefault: () => void }) {
-    e.preventDefault() // Prevent the default form submission behavior
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    onSubmit(data)
+  }
 
-    onSubmit(email, password)
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target
+    setData(prevData => ({
+      ...prevData,
+      [name]: value
+    }))
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files && e.target.files[0]
     if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
-      setSelectedFile(file)
+      setData(prevData => ({
+        ...prevData,
+        selectedFile: file // Update the selectedFile in the state
+      }))
     } else {
-      setSelectedFile(null)
+      setData(prevData => ({
+        ...prevData,
+        selectedFile: null
+      }))
     }
   }
+
   return (
     <Container>
       {waringMsn && (
@@ -57,22 +72,28 @@ export const Form: FC<FormProps> = ({
         {formTitle && <p className="formTitle">{formTitle}</p>}
         <div>
           <input
+            name="email"
             placeholder={input1Title || 'E-mail'}
-            onChange={e => setEmail(e.target.value)}
+            value={data.email}
+            onChange={handleInputChange}
           />
         </div>
 
         <div>
           <input
+            name="password"
             placeholder={input2Title || 'Senha'}
-            onChange={e => setPassword(e.target.value)}
+            value={data.password}
+            onChange={handleInputChange}
           />
         </div>
         {signUp && (
           <div>
             <input
-              placeholder="Senha"
-              onChange={e => setConfirmationPassword(e.target.value)}
+              name="nome"
+              placeholder="Nome"
+              value={data.nome}
+              onChange={handleInputChange}
             />
           </div>
         )}
@@ -89,9 +110,10 @@ export const Form: FC<FormProps> = ({
             <input
               type="file"
               accept=".png, .jpg, .jpeg"
-              placeholder="Imagem representativa"
+              name="selectedFile"
               onChange={handleFileChange}
             />
+            Imagem Representativa
           </label>
         )}
 

@@ -9,10 +9,22 @@ import { Card } from '../../components/Card/index.js'
 interface ItemRegisterProps {}
 
 export const ItemRegister: FC<ItemRegisterProps> = () => {
-  function handleSignIn() {
-    api.post('/api/sign', {
-      data: {}
-    })
+  function handleItemRegister(data: any) {
+    const { email, nome, password } = data
+
+    api
+      .post('/signup', {
+        nome: nome,
+        email: email,
+        senha: password
+      })
+      .then(function (response) {
+        console.log('SUCESSFUL RESPONSE')
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
   }
 
   return (
@@ -63,7 +75,7 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
         </nav>
         <div className="form-wrapper">
           <Form
-            onSubmit={handleSignIn}
+            onSubmit={handleItemRegister}
             newProduct
             input1Title="Nome"
             input2Title="Preço"

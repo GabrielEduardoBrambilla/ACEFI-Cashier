@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 export const FormContainer = styled.form<{ product?: boolean }>`
   display: flex;
@@ -15,7 +15,7 @@ export const FormContainer = styled.form<{ product?: boolean }>`
   border-radius: 9px;
   .formTitle {
     font-family: Inter;
-    font-size: 24px;
+    font-size: 22px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -104,9 +104,19 @@ export const FormContainer = styled.form<{ product?: boolean }>`
   .uploadButton {
     display: flex;
     width: 100%;
+    > input {
+      display: none;
+    }
     > svg {
       font-size: 20px;
     }
+    font-family: Inter;
+    font-size: 16px;
+    height: 30px;
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
     gap: 10px;
     align-items: center;
     padding: 0 0 0 20px;
