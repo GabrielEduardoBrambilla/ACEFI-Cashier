@@ -6,9 +6,9 @@ import { FaStore, FaUserCircle } from 'react-icons/fa'
 import { BsFiletypeXlsx } from 'react-icons/bs'
 import { Card } from '../../components/Card/index.js'
 
-interface ItemRegisterProps {}
+interface SalesPageProps {}
 
-export const ItemRegister: FC<ItemRegisterProps> = () => {
+export const SalesPage: FC<SalesPageProps> = () => {
   function handleItemRegister(data: FormData) {
     const nome = data.get('nome') as string
     const preco = data.get('preco') as string
@@ -32,32 +32,6 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
   return (
     <Container>
       <div className="items-wrapper">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
         <Card />
         <Card />
         <Card />

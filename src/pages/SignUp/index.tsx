@@ -7,9 +7,10 @@ import { api } from '../../services/api.js'
 interface SignUpProps {}
 
 export const SignUp: FC<SignUpProps> = () => {
-  function handleSignUp(data: any) {
-    const { email, nome, password } = data
-
+  function handleSignUp(data: FormData) {
+    const nome = data.get('nome') as string
+    const email = data.get('email') as string
+    const password = data.get('senha') as string
     api
       .post('/signup', {
         nome: nome,

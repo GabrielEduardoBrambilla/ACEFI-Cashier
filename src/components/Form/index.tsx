@@ -1,15 +1,15 @@
-import { FC, useState } from 'react'
+import React, { FC, useState, ChangeEvent, FormEvent } from 'react'
 import { FormContainer, Container } from './styles'
 import { FiUpload } from 'react-icons/fi'
 
 interface FormProps {
-  onSubmit: (formData: any) => void // You can define a generic type for formData if needed
-  ActionButton: string
-  waringMsn?: string
-  formTitle?: string
+  onSubmit: (formData: FormData) => void
   signUp?: boolean
-  signIn?: boolean
   newProduct?: boolean
+  signIn?: boolean
+  formTitle?: string
+  waringMsn?: string
+  ActionButton: string
   input1Title?: string
   input2Title?: string
 }
@@ -25,39 +25,23 @@ export const Form: FC<FormProps> = ({
   input2Title,
   onSubmit
 }: FormProps) => {
-  const [data, setData] = useState({
-    email: '',
-    password: '',
-    nome: '',
-    selectedFile: null as File | null // Initialize the file data as null
-    // Add more fields as needed
-  })
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [data, setData] = useState(new FormData())
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: FormEvent) {
     e.preventDefault()
     onSubmit(data)
   }
 
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target
-    setData(prevData => ({
-      ...prevData,
-      [name]: value
-    }))
+    data.set(name, value)
   }
 
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files && e.target.files[0]
     if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
-      setData(prevData => ({
-        ...prevData,
-        selectedFile: file // Update the selectedFile in the state
-      }))
-    } else {
-      setData(prevData => ({
-        ...prevData,
-        selectedFile: null
-      }))
+      data.set('selectedFile', file)
     }
   }
 
@@ -74,7 +58,7 @@ export const Form: FC<FormProps> = ({
           <input
             name="email"
             placeholder={input1Title || 'E-mail'}
-            value={data.email}
+            value={data.get('email') as string}
             onChange={handleInputChange}
           />
         </div>
@@ -83,7 +67,7 @@ export const Form: FC<FormProps> = ({
           <input
             name="password"
             placeholder={input2Title || 'Senha'}
-            value={data.password}
+            value={data.get('password') as string}
             onChange={handleInputChange}
           />
         </div>
@@ -92,7 +76,7 @@ export const Form: FC<FormProps> = ({
             <input
               name="nome"
               placeholder="Nome"
-              value={data.nome}
+              value={data.get('nome') as string}
               onChange={handleInputChange}
             />
           </div>

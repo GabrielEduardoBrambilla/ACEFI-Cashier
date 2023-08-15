@@ -7,9 +7,9 @@ import { api } from '../../services/api.js'
 interface SignInProps {}
 
 export const SignIn: FC<SignInProps> = () => {
-  function handleSignIn(data: any) {
-    const { email, password } = data
-
+  function handleSignIn(data: FormData) {
+    const email = data.get('email') as string
+    const password = data.get('senha') as string
     api
       .post('/signin', {
         email: email,
