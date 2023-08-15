@@ -49,16 +49,7 @@ export const SalesPage: FC<SalesPageProps> = () => {
           </div>
           <FaUserCircle />
         </nav>
-        <div className="form-wrapper">
-          <Form
-            onSubmit={handleItemRegister}
-            newProduct
-            input1Title="Nome"
-            input2Title="Preço"
-            formTitle="Registrar um novo Item"
-            ActionButton="Registrar item"
-          />
-        </div>
+        <div className="form-wrapper"></div>
       </div>
     </Container>
   )
