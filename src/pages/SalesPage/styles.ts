@@ -3,7 +3,8 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: grid;
   grid-template-columns: 3fr 2fr;
-  grid-template-areas: 'items-wrapper' 'right-section';
+  grid-template-areas: 'items-wrapper right-section';
+
   height: 100vh;
   .items-wrapper {
     grid-area: 'items-wrapper';
@@ -22,13 +23,13 @@ export const Container = styled.div`
     padding: 50px;
     height: 100vh;
     justify-content: space-between;
+    color: ${({ theme }) => theme.COLORS.FONT[200]};
 
     > nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 30px;
-      color: ${({ theme }) => theme.COLORS.FONT[200]};
       .store-btn {
         display: flex;
         align-items: center;
@@ -41,14 +42,33 @@ export const Container = styled.div`
         line-height: normal;
       }
     }
-    .form-wrapper {
-      display: flex;
+    .table-container {
+      display: grid;
+      grid-template-columns: repeat(
+        3,
+        1fr
+      ); /* Three columns with equal width */
+      text-align: center;
+      width: 100%;
+    }
+
+    .table-header {
+      font-weight: bold;
+    }
+    .table-row {
+      display: flex; /* Display the row items in a row */
       align-items: center;
-      justify-content: center;
-      height: 100%;
-      > div {
-        > form {
-        }
+      grid-column: 1 / -1;
+      .table-item {
+        flex: 1; /* Allow the items to expand and share equal width */
+        border-radius: 10px;
+        padding: 2px; /* Adjust padding as needed */
+      }
+      &:nth-child(even) {
+        background-color: ${({ theme }) =>
+          theme.COLORS
+            .CONTRAST[200]}; /* You can adjust the background color here */
+        border-radius: 20px;
       }
     }
   }
