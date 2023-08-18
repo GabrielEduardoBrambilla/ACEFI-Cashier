@@ -1,4 +1,4 @@
-import React, { FC, useState, ChangeEvent, FormEvent } from 'react'
+import { FC, useState, ChangeEvent, FormEvent } from 'react'
 import { FormContainer, Container } from './styles'
 import { FiUpload } from 'react-icons/fi'
 
@@ -27,7 +27,7 @@ export const Form: FC<FormProps> = ({
 }: FormProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [data, setData] = useState(new FormData())
-
+  setData(data)
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
     onSubmit(data)
