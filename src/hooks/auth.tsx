@@ -17,7 +17,6 @@ interface User {
 interface AuthContextData {
   user: User | null
   token: string | null
-  isAdmin: boolean
   signIn: (credentials: { email: string; password: string }) => Promise<void>
   signOut: () => void
 }
@@ -29,33 +28,52 @@ interface AuthProviderProps {
 export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 function AuthProvider({ children }: AuthProviderProps) {
+  const signIn = async ({
+    email,
+    password
+  }: {
+    email: string
+    password: string
+  }) => {
+    try {
+      const response = await api.post('/sessions', { email, password })
+      const { user, token } = response.data
+
+      localStorage.setItem('@ccsystem:user', JSON.stringify(user))
+      localStorage.setItem('@ccsystem:token', token)
+
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      setData({
+        user,
+        token,
+        signIn,
+        signOut
+      })
+    } catch (error: any) {
+      if (error.response) {
+        alert(error.response.data.message)
+      } else {
+        alert('Not possible to login')
+      }
+    }
+  }
+
+  const signOut = () => {
+    localStorage.removeItem('@ccsystem:token')
+    localStorage.removeItem('@ccsystem:user')
+    setData({
+      user: null,
+      token: null,
+      signIn,
+      signOut
+    })
+  }
+
   const [data, setData] = useState<AuthContextData>({
     user: null,
     token: null,
-    isAdmin: false,
-    signIn: async ({ email, password }) => {
-      try {
-        const response = await api.post('/sessions', { email, password })
-        const { user, token } = response.data
-
-        localStorage.setItem('@ccsystem:user', JSON.stringify(user))
-        localStorage.setItem('@ccsystem:token', token)
-
-        api.defaults.headers.common['Authorization'] = `Bearer ${token}`
-        setData({ user, token, isAdmin: user.is_Admin === 1 })
-      } catch (error) {
-        if (error.response) {
-          alert(error.response.data.message)
-        } else {
-          alert('Not possible to login')
-        }
-      }
-    },
-    signOut: () => {
-      localStorage.removeItem('@ccsystem:token')
-      localStorage.removeItem('@ccsystem:user')
-      setData({ user: null, token: null, isAdmin: false })
-    }
+    signIn,
+    signOut
   })
 
   const token = localStorage.getItem('@ccsystem:token')
@@ -68,7 +86,8 @@ function AuthProvider({ children }: AuthProviderProps) {
       setData({
         user: parsedUser,
         token,
-        isAdmin: parsedUser.is_Admin === 1
+        signIn,
+        signOut
       })
     }
   }, [token, user])
