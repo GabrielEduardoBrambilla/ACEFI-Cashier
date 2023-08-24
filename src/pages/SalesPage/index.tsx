@@ -4,29 +4,30 @@ import { Container } from './styles.js'
 import { FaStore, FaUserCircle } from 'react-icons/fa'
 import { BsFiletypeXlsx } from 'react-icons/bs'
 import { Card } from '../../components/Card/index.js'
+import { Navbar } from '../../components/Navbar/index.js'
+import { api } from '../../services/api.js'
 
 interface SalesPageProps {}
 
 export const SalesPage: FC<SalesPageProps> = () => {
-  // function handleItemRegister(data: FormData) {
-  //   const nome = data.get('nome') as string
-  //   const preco = data.get('preco') as string
-  //   const file = data.get('selectedFile') as File
-
-  //   api
-  //     .post('/signup', {
-  //       nome: nome,
-  //       preco: preco,
-  //       image: file
-  //     })
-  //     .then(function (response) {
-  //       console.log('SUCESSFUL RESPONSE')
-  //       console.log(response)
-  //     })
-  //     .catch(function (error) {
-  //       console.error(error)
-  //     })
-  // }
+  function handleItemRegister(data: FormData) {
+    const nome = data.get('nome') as string
+    const preco = data.get('preco') as string
+    const file = data.get('selectedFile') as File
+    api
+      .post('/signup', {
+        nome: nome,
+        preco: preco,
+        image: file
+      })
+      .then(function (response) {
+        console.log('SUCESSFUL RESPONSE')
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+  }
 
   return (
     <Container>
@@ -39,16 +40,7 @@ export const SalesPage: FC<SalesPageProps> = () => {
         <Card />
       </div>
       <div className="right-section">
-        <nav>
-          <BsFiletypeXlsx />
-
-          <div className="store-btn">
-            <p>Ir para loja</p>
-            <FaStore />
-          </div>
-          <FaUserCircle />
-        </nav>
-
+        <Navbar store />
         <table>
           <tr>
             <th>Nome</th>

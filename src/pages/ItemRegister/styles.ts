@@ -19,7 +19,7 @@ export const Container = styled.div`
   }
   .right-section {
     background-color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
-    padding: 50px;
+    padding: 10px;
     height: 100vh;
     justify-content: space-between;
 
@@ -27,7 +27,6 @@ export const Container = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100%;
     }
   }
 `
