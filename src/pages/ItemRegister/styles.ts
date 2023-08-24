@@ -23,33 +23,11 @@ export const Container = styled.div`
     height: 100vh;
     justify-content: space-between;
 
-    > nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 30px;
-      color: ${({ theme }) => theme.COLORS.FONT[200]};
-      .store-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        font-size: 20px;
-        font-family: Inter;
-        font-style: normal;
-        font-weight: 700;
-        line-height: normal;
-      }
-    }
     .form-wrapper {
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100%;
-      > div {
-        > form {
-        }
-      }
     }
   }
 `

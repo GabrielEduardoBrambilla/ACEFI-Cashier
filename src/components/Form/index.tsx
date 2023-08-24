@@ -1,6 +1,7 @@
 import { FC, useState, ChangeEvent, FormEvent } from 'react'
 import { FormContainer, Container } from './styles'
 import { FiUpload } from 'react-icons/fi'
+import { Link } from 'react-router-dom'
 
 interface FormProps {
   onSubmit: (formData: FormData) => void
@@ -35,6 +36,7 @@ export const Form: FC<FormProps> = ({
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target
+    console.log(name + value)
     data.set(name, value)
   }
 
@@ -58,7 +60,6 @@ export const Form: FC<FormProps> = ({
           <input
             name="email"
             placeholder={input1Title || 'E-mail'}
-            value={data.get('email') as string}
             onChange={handleInputChange}
           />
         </div>
@@ -67,16 +68,14 @@ export const Form: FC<FormProps> = ({
           <input
             name="password"
             placeholder={input2Title || 'Senha'}
-            value={data.get('password') as string}
             onChange={handleInputChange}
           />
         </div>
         {signUp && (
           <div>
             <input
-              name="nome"
+              name="name"
               placeholder="Nome"
-              value={data.get('nome') as string}
               onChange={handleInputChange}
             />
           </div>
@@ -84,7 +83,7 @@ export const Form: FC<FormProps> = ({
 
         {signIn && (
           <span className="newRegister">
-            <a href="">Novo? Registre-se aqui!</a>
+            <Link to="/SignUp">Novo? Registre-se aqui!</Link>
           </span>
         )}
 

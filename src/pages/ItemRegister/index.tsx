@@ -2,9 +2,8 @@ import { Form } from '../../components/Form/index.js'
 import { FC } from 'react'
 import { Container } from './styles.js'
 import { api } from '../../services/api.js'
-import { FaStore, FaUserCircle } from 'react-icons/fa'
-import { BsFiletypeXlsx } from 'react-icons/bs'
 import { Card } from '../../components/Card/index.js'
+import { Navbar } from '../../components/Navbar/index.js'
 
 interface ItemRegisterProps {}
 
@@ -66,25 +65,17 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
         <Card />
       </div>
       <div className="right-section">
-        <nav>
-          <BsFiletypeXlsx />
+        <Navbar />
 
-          <div className="store-btn">
-            <p>Ir para loja</p>
-            <FaStore />
-          </div>
-          <FaUserCircle />
-        </nav>
         <div className="form-wrapper">
-          {/* <Form
+          <Form
             onSubmit={handleItemRegister}
             newProduct
             input1Title="Nome"
             input2Title="Price"
             formTitle="Registrar um novo Item"
-            waringMsn="Nothing"
             ActionButton="Registrar item"
-          /> */}
+          />
         </div>
       </div>
     </Container>

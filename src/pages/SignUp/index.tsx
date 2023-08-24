@@ -9,12 +9,18 @@ interface SignUpProps {}
 export const SignUp: FC<SignUpProps> = () => {
   console.log('SignIN')
   function handleSignUp(data: FormData) {
-    const nome = data.get('nome') as string
+    const name = data.get('name') as string
     const email = data.get('email') as string
-    const password = data.get('senha') as string
+    const password = data.get('password') as string
+    console.log(email)
+    console.log(password)
+    console.log(name)
+    if (!name || !email || !password) {
+      return alert('Preencha todos os campos!')
+    }
     api
       .post('/signup', {
-        nome: nome,
+        nome: name,
         email: email,
         senha: password
       })
