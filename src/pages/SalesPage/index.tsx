@@ -41,28 +41,109 @@ export const SalesPage: FC<SalesPageProps> = () => {
       </div>
       <div className="right-section">
         <Navbar store />
-        <table>
+        <table className="order-items">
           <tr>
             <th>Nome</th>
             <th>Quant</th>
             <th>Preço</th>
           </tr>
           <tr>
-            <td>Coca</td>
+            <td>Coca-cola</td>
             <td>2</td>
             <td>5</td>
           </tr>
           <tr>
-            <td>Coca</td>
+            <td>Sushi</td>
             <td>2</td>
             <td>5</td>
           </tr>
           <tr>
-            <td>Coca</td>
+            <td>Nigiri</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Coca-cola</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Sushi</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Nigiri</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Coca-cola</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Sushi</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Nigiri</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Coca-cola</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Sushi</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Nigiri</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Coca-cola</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Sushi</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Nigiri</td>
             <td>2</td>
             <td>5</td>
           </tr>
         </table>
+        <div className="order-info">
+          <table>
+            <tr>
+              <th>Total</th>
+              <td>R$ 25,50</td>
+            </tr>
+            <tr>
+              <th>Recebido</th>
+              <td>
+                {/* <form action="">
+                  <input type="number" />
+                </form> */}
+              </td>
+            </tr>
+            <tr>
+              <th>Troco</th>
+              <td>R$ 74,50</td>
+            </tr>
+          </table>
+          <button>PAGO</button>
+        </div>
       </div>
     </Container>
   )

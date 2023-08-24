@@ -2,7 +2,6 @@ import { Form } from '../../components/Form'
 import { FC } from 'react'
 import CapivaraOnLake from '../../assets/Cartoon.png'
 import { Container } from './styles'
-import { api } from '../../services/api.js'
 import { useAuth } from '../../hooks/auth.js'
 
 interface SignInProps {}
