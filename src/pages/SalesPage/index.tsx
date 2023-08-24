@@ -48,36 +48,29 @@ export const SalesPage: FC<SalesPageProps> = () => {
           </div>
           <FaUserCircle />
         </nav>
-        <div className="table-container">
-          <div className="table-header">Nome</div>
-          <div className="table-header">Quant</div>
-          <div className="table-header">Preco</div>
-          <div className="table-row">
-            <div className="table-item">Coca</div>
-            <div className="table-item">1</div>
-            <div className="table-item">5</div>
-          </div>
-          <div className="table-row">
-            <div className="table-item">Coca</div>
-            <div className="table-item">1</div>
-            <div className="table-item">5</div>
-          </div>
-          <div className="table-row">
-            <div className="table-item">Coca</div>
-            <div className="table-item">1</div>
-            <div className="table-item">5</div>
-          </div>
-          <div className="table-row">
-            <div className="table-item">Coca</div>
-            <div className="table-item">1</div>
-            <div className="table-item">5</div>
-          </div>{' '}
-          <div className="table-row">
-            <div className="table-item">Coca</div>
-            <div className="table-item">1</div>
-            <div className="table-item">5</div>
-          </div>
-        </div>
+
+        <table>
+          <tr>
+            <th>Nome</th>
+            <th>Quant</th>
+            <th>Preço</th>
+          </tr>
+          <tr>
+            <td>Coca</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Coca</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Coca</td>
+            <td>2</td>
+            <td>5</td>
+          </tr>
+        </table>
       </div>
     </Container>
   )

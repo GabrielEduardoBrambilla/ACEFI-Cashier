@@ -42,7 +42,7 @@ export const Container = styled.div`
         line-height: normal;
       }
     }
-    .table-container {
+    table {
       display: grid;
       grid-template-columns: repeat(
         3,
@@ -52,14 +52,17 @@ export const Container = styled.div`
       width: 100%;
     }
 
-    .table-header {
+    th {
       font-weight: bold;
+      flex: 1; /* Allow the items to expand and share equal width */
+      border-radius: 10px;
+      padding: 2px;
     }
-    .table-row {
+    tr {
       display: flex; /* Display the row items in a row */
       align-items: center;
       grid-column: 1 / -1;
-      .table-item {
+      td {
         flex: 1; /* Allow the items to expand and share equal width */
         border-radius: 10px;
         padding: 2px; /* Adjust padding as needed */

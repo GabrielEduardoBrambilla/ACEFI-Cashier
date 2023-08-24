@@ -4,7 +4,7 @@ import { ItemRegister } from '../pages/ItemRegister'
 import { SalesPage } from '../pages/SalesPage'
 
 export function AppRoutes() {
-  console.log('AppRoutes')
+  console.log('In AppRoutes')
   return (
     <Routes>
       <Route path="/" element={<ItemRegister />} />

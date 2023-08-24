@@ -7,6 +7,7 @@ import { api } from '../../services/api.js'
 interface SignUpProps {}
 
 export const SignUp: FC<SignUpProps> = () => {
+  console.log('SignIN')
   function handleSignUp(data: FormData) {
     const nome = data.get('nome') as string
     const email = data.get('email') as string

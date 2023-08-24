@@ -76,14 +76,15 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
           <FaUserCircle />
         </nav>
         <div className="form-wrapper">
-          <Form
+          {/* <Form
             onSubmit={handleItemRegister}
             newProduct
             input1Title="Nome"
-            input2Title="Preço"
+            input2Title="Price"
             formTitle="Registrar um novo Item"
+            waringMsn="Nothing"
             ActionButton="Registrar item"
-          />
+          /> */}
         </div>
       </div>
     </Container>
