@@ -53,7 +53,7 @@ export const Container = styled.div`
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND[100]};
   }
 
-  @media (min-width: 1023px) {
+  @media (min-width: 723px) {
     display: grid;
     grid-template-columns: 3fr 2fr;
     height: 100vh;

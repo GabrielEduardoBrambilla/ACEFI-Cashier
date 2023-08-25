@@ -99,7 +99,6 @@ export const Form: FC<FormProps> = ({
             Imagem Representativa
           </label>
         )}
-
         <button>{ActionButton}</button>
       </FormContainer>
     </Container>

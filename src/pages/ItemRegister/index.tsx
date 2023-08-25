@@ -75,6 +75,7 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
             input2Title="Price"
             formTitle="Registrar um novo Item"
             ActionButton="Registrar item"
+            waringMsn="test"
           />
         </div>
       </div>

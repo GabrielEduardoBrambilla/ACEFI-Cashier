@@ -4,18 +4,17 @@ export const FormContainer = styled.form<{ product?: boolean }>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 16px;
-  padding: 20px 0;
-  font-size: 24px !important;
+  gap: 20px;
+  padding: 5px 0;
+  font-size: 14px !important;
+  text-align: center;
   background-color: ${props =>
-    props.product
-      ? props.theme.COLORS.CONTRAST[100]
-      : props.theme.COLORS.BACKGROUND[100]};
+    props.product ? null : props.theme.COLORS.BACKGROUND[100]};
 
   border-radius: 9px;
   .formTitle {
     font-family: Inter;
-    font-size: 22px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -34,7 +33,7 @@ export const FormContainer = styled.form<{ product?: boolean }>`
   }
   > div {
     position: relative;
-    height: 4.4rem;
+    /* height: 4.4rem; */
     width: 100%;
     min-width: 200px;
     > input {
@@ -43,7 +42,7 @@ export const FormContainer = styled.form<{ product?: boolean }>`
           ? 'unset'
           : 'drop-shadow(-2px 4px 4px rgba(0, 0, 0, 0.25))'};
 
-      height: 100%;
+      height: 50%;
       width: 100%;
       border-bottom: 5px solid
         ${props =>
@@ -51,10 +50,8 @@ export const FormContainer = styled.form<{ product?: boolean }>`
             ? props.theme.COLORS.BACKGROUND[100]
             : props.theme.COLORS.CONTRAST[100]};
       background-color: transparent;
-      padding-top: 1.2rem;
-      padding-bottom: 0.6rem;
       font-family: sans-serif;
-      font-size: 20px;
+      font-size: 14px;
       font-weight: normal;
 
       color: ${props =>
@@ -111,7 +108,7 @@ export const FormContainer = styled.form<{ product?: boolean }>`
       font-size: 20px;
     }
     font-family: Inter;
-    font-size: 16px;
+    font-size: 14px;
     height: 30px;
     cursor: pointer;
     font-style: normal;
@@ -119,7 +116,7 @@ export const FormContainer = styled.form<{ product?: boolean }>`
     line-height: normal;
     gap: 10px;
     align-items: center;
-    padding: 0 0 0 20px;
+    justify-content: center;
     border-radius: 10px;
 
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND[100]};
@@ -147,20 +144,21 @@ export const Container = styled.div`
   max-width: 420px;
 
   .warning {
-    background-color: ${({ theme }) => theme.COLORS.CONTRAST[200]};
-
-    margin: 1rem 0 1.2rem 0;
-    padding: 20px;
+    /* background-; */
+    background-color: ${({ theme }) => theme.COLORS.GREEN};
+    opacity: 0.9;
+    margin: 5px 0;
+    padding: 5px;
     text-align: center;
     border-radius: 90px;
 
     > p {
-      color: ${({ theme }) => theme.COLORS.GREEN};
+      color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
       font-family: Inter;
 
-      font-size: 20px;
+      font-size: 14px;
       font-style: normal;
-      font-weight: 700;
+      font-weight: 500;
       line-height: normal;
     }
   }

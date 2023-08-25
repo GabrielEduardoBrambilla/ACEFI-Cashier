@@ -40,6 +40,7 @@ export const Container = styled.div`
         flex: 1; /* Allow the items to expand and share equal width */
         border-radius: 10px;
         padding: 2px;
+        font-size: 14px;
       }
       tr {
         max-height: 44px;
@@ -47,6 +48,8 @@ export const Container = styled.div`
         align-items: center;
         grid-column: 1 / -1;
         td {
+          font-size: 14px;
+
           flex: 1; /* Allow the items to expand and share equal width */
           border-radius: 10px;
           padding: 2px; /* Adjust padding as needed */
@@ -97,6 +100,7 @@ export const Container = styled.div`
         color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
         height: 32px;
         border-radius: 60px;
+        font-weight: bold;
         &:hover {
           opacity: 0.9;
         }
