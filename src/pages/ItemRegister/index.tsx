@@ -12,12 +12,10 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
     const nome = data.get('nome') as string
     const preco = data.get('preco') as string
     const file = data.get('selectedFile') as File
-
+    console.log(preco)
     api
-      .post('/signup', {
-        nome: nome,
-        preco: preco,
-        image: file
+      .post('/produtos', {
+        data
       })
       .then(function (response) {
         console.log('SUCESSFUL RESPONSE')
@@ -71,11 +69,10 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
           <Form
             onSubmit={handleItemRegister}
             newProduct
-            input1Title="Nome"
-            input2Title="Price"
+            input1Title="nome"
+            input2Title="preco"
             formTitle="Registrar um novo Item"
             ActionButton="Registrar item"
-            waringMsn="test"
           />
         </div>
       </div>

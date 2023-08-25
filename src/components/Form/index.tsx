@@ -28,15 +28,16 @@ export const Form: FC<FormProps> = ({
 }: FormProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [data, setData] = useState(new FormData())
+  const warningDisplay = waringMsn ? true : false
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    console.log(data)
     onSubmit(data)
   }
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target
-    console.log(name + value)
     data.set(name, value)
   }
 
@@ -48,17 +49,15 @@ export const Form: FC<FormProps> = ({
   }
 
   return (
-    <Container>
-      {waringMsn && (
-        <div className="warning">
-          <p>{waringMsn}</p>
-        </div>
-      )}
-      <FormContainer onSubmit={handleSubmit} product={newProduct}>
+    <Container warning={warningDisplay}>
+      <div className="warning">
+        <p>{waringMsn}</p>
+      </div>
+      <FormContainer id="form" onSubmit={handleSubmit} product={newProduct}>
         {formTitle && <p className="formTitle">{formTitle}</p>}
         <div>
           <input
-            name="email"
+            name={input1Title || 'email'}
             placeholder={input1Title || 'E-mail'}
             onChange={handleInputChange}
           />
@@ -66,7 +65,7 @@ export const Form: FC<FormProps> = ({
 
         <div>
           <input
-            name="password"
+            name={input2Title || 'password'}
             placeholder={input2Title || 'Senha'}
             onChange={handleInputChange}
           />
@@ -99,8 +98,10 @@ export const Form: FC<FormProps> = ({
             Imagem Representativa
           </label>
         )}
-        <button>{ActionButton}</button>
       </FormContainer>
+      <button type="submit" form="form">
+        {ActionButton}
+      </button>
     </Container>
   )
 }

@@ -22,7 +22,8 @@ export const SignIn: FC<SignInProps> = () => {
       </div>
       <div className="form-section">
         <Form
-          waringMsn="Registrado com sucesso"
+          // waringMsn="Registrado com sucesso"
+          formTitle="Entre na plataforma! "
           onSubmit={handleSignIn}
           signIn
           ActionButton="Login"

@@ -26,7 +26,7 @@ export const FormContainer = styled.form<{ product?: boolean }>`
   .newRegister {
     text-align: left;
     font-family: Inter;
-    font-size: 18px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -41,8 +41,8 @@ export const FormContainer = styled.form<{ product?: boolean }>`
         props.product
           ? 'unset'
           : 'drop-shadow(-2px 4px 4px rgba(0, 0, 0, 0.25))'};
-
-      height: 50%;
+      text-transform: capitalize;
+      height: 100%;
       width: 100%;
       border-bottom: 5px solid
         ${props =>
@@ -88,16 +88,7 @@ export const FormContainer = styled.form<{ product?: boolean }>`
       }
     }
   }
-  > button {
-    height: 42px;
-    background-color: ${({ theme }) => theme.COLORS.BUTTON[100]};
 
-    border-radius: 60px;
-
-    font-weight: bold;
-
-    margin: 4px 0 0 0;
-  }
   .uploadButton {
     display: flex;
     width: 100%;
@@ -121,6 +112,26 @@ export const FormContainer = styled.form<{ product?: boolean }>`
 
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND[100]};
   }
+`
+
+export const Container = styled.div<{ warning?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  height: 100%;
+  width: 90%;
+  max-width: 420px;
+  justify-content: space-between;
+
+  button {
+    height: 42px;
+    background-color: ${({ theme }) => theme.COLORS.BUTTON[100]};
+
+    border-radius: 60px;
+
+    font-weight: bold;
+    margin: 4px 0 0 0;
+  }
   @media (min-width: 1023px) {
     > button {
       align-self: flex-end;
@@ -134,18 +145,11 @@ export const FormContainer = styled.form<{ product?: boolean }>`
       margin: 4px 0 0 0;
     }
   }
-`
-
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  width: 90%;
-  max-width: 420px;
-
   .warning {
     /* background-; */
-    background-color: ${({ theme }) => theme.COLORS.GREEN};
+    display: ${props => (props.warning ? 'unset' : 'hidden')};
+    background-color: ${props => (props.warning ? 'green' : null)};
+
     opacity: 0.9;
     margin: 5px 0;
     padding: 5px;
