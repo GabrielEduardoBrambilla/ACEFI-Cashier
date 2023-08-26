@@ -10,6 +10,156 @@ import { api } from '../../services/api.js'
 interface SalesPageProps {}
 
 export const SalesPage: FC<SalesPageProps> = () => {
+  const response = [
+    {
+      id: 1,
+      user_id: 1,
+      name: 'coca',
+      price: 5.5,
+      imageAddress: '1691005574253_coca-lata.jpg'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: 'nescal',
+      price: 4,
+      imageAddress: '1691005681144_nescau.jpg'
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: 'pipoca',
+      price: 5,
+      imageAddress: '1691005691478_pippos.jpg'
+    },
+    {
+      id: 1,
+      user_id: 1,
+      name: 'coca',
+      price: 5.5,
+      imageAddress: '1691005574253_coca-lata.jpg'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: 'nescal',
+      price: 4,
+      imageAddress: '1691005681144_nescau.jpg'
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: 'pipoca',
+      price: 5,
+      imageAddress: '1691005691478_pippos.jpg'
+    },
+    {
+      id: 1,
+      user_id: 1,
+      name: 'coca',
+      price: 5.5,
+      imageAddress: '1691005574253_coca-lata.jpg'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: 'nescal',
+      price: 4,
+      imageAddress: '1691005681144_nescau.jpg'
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: 'pipoca',
+      price: 5,
+      imageAddress: '1691005691478_pippos.jpg'
+    },
+    {
+      id: 1,
+      user_id: 1,
+      name: 'coca',
+      price: 5.5,
+      imageAddress: '1691005574253_coca-lata.jpg'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: 'nescal',
+      price: 4,
+      imageAddress: '1691005681144_nescau.jpg'
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: 'pipoca',
+      price: 5,
+      imageAddress: '1691005691478_pippos.jpg'
+    },
+    {
+      id: 1,
+      user_id: 1,
+      name: 'coca',
+      price: 5.5,
+      imageAddress: '1691005574253_coca-lata.jpg'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: 'nescal',
+      price: 4,
+      imageAddress: '1691005681144_nescau.jpg'
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: 'pipoca',
+      price: 5,
+      imageAddress: '1691005691478_pippos.jpg'
+    },
+    {
+      id: 1,
+      user_id: 1,
+      name: 'coca',
+      price: 5.5,
+      imageAddress: '1691005574253_coca-lata.jpg'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: 'nescal',
+      price: 4,
+      imageAddress: '1691005681144_nescau.jpg'
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: 'pipoca',
+      price: 5,
+      imageAddress: '1691005691478_pippos.jpg'
+    },
+    {
+      id: 1,
+      user_id: 1,
+      name: 'coca',
+      price: 5.5,
+      imageAddress: '1691005574253_coca-lata.jpg'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: 'nescal',
+      price: 4,
+      imageAddress: '1691005681144_nescau.jpg'
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: 'pipoca',
+      price: 5,
+      imageAddress: '1691005691478_pippos.jpg'
+    }
+  ]
+
   function handleItemRegister(data: FormData) {
     const nome = data.get('nome') as string
     const preco = data.get('preco') as string
@@ -47,82 +197,15 @@ export const SalesPage: FC<SalesPageProps> = () => {
             <th>Quant</th>
             <th>Preço</th>
           </tr>
-          <tr>
-            <td>Coca-cola</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Sushi</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Nigiri</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Coca-cola</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Sushi</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Nigiri</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Coca-cola</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Sushi</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Nigiri</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Coca-cola</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Sushi</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Nigiri</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Coca-cola</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Sushi</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Nigiri</td>
-            <td>2</td>
-            <td>5</td>
-          </tr>
+          {response.map(item => (
+            <tr>
+              <td>{item.name}</td>
+              <td>item_quant</td>
+              <td>{item.price}</td>
+            </tr>
+          ))}
         </table>
+
         <div className="order-info">
           <table>
             <tr>
