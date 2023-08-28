@@ -8,6 +8,156 @@ import { Navbar } from '../../components/Navbar/index.js'
 interface ItemRegisterProps {}
 
 export const ItemRegister: FC<ItemRegisterProps> = () => {
+  const response = [
+    {
+      id: 1,
+      user_id: 1,
+      name: 'coca',
+      price: 5.5,
+      imageAddress: '1691005574253_coca-lata.jpg'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: 'nescal',
+      price: 4,
+      imageAddress: '1691005681144_nescau.jpg'
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: 'pipoca',
+      price: 5,
+      imageAddress: '1691005691478_pippos.jpg'
+    },
+    {
+      id: 1,
+      user_id: 1,
+      name: 'coca',
+      price: 5.5,
+      imageAddress: '1691005574253_coca-lata.jpg'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: 'nescal',
+      price: 4,
+      imageAddress: '1691005681144_nescau.jpg'
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: 'pipoca',
+      price: 5,
+      imageAddress: '1691005691478_pippos.jpg'
+    },
+    {
+      id: 1,
+      user_id: 1,
+      name: 'coca',
+      price: 5.5,
+      imageAddress: '1691005574253_coca-lata.jpg'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: 'nescal',
+      price: 4,
+      imageAddress: '1691005681144_nescau.jpg'
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: 'pipoca',
+      price: 5,
+      imageAddress: '1691005691478_pippos.jpg'
+    },
+    {
+      id: 1,
+      user_id: 1,
+      name: 'coca',
+      price: 5.5,
+      imageAddress: '1691005574253_coca-lata.jpg'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: 'nescal',
+      price: 4,
+      imageAddress: '1691005681144_nescau.jpg'
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: 'pipoca',
+      price: 5,
+      imageAddress: '1691005691478_pippos.jpg'
+    },
+    {
+      id: 1,
+      user_id: 1,
+      name: 'coca',
+      price: 5.5,
+      imageAddress: '1691005574253_coca-lata.jpg'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: 'nescal',
+      price: 4,
+      imageAddress: '1691005681144_nescau.jpg'
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: 'pipoca',
+      price: 5,
+      imageAddress: '1691005691478_pippos.jpg'
+    },
+    {
+      id: 1,
+      user_id: 1,
+      name: 'coca',
+      price: 5.5,
+      imageAddress: '1691005574253_coca-lata.jpg'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: 'nescal',
+      price: 4,
+      imageAddress: '1691005681144_nescau.jpg'
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: 'pipoca',
+      price: 5,
+      imageAddress: '1691005691478_pippos.jpg'
+    },
+    {
+      id: 1,
+      user_id: 1,
+      name: 'coca',
+      price: 5.5,
+      imageAddress: '1691005574253_coca-lata.jpg'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: 'nescal',
+      price: 4,
+      imageAddress: '1691005681144_nescau.jpg'
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: 'pipoca',
+      price: 5,
+      imageAddress: '1691005691478_pippos.jpg'
+    }
+  ]
+
   function handleItemRegister(data: FormData) {
     const nome = data.get('nome') as string
     const preco = data.get('preco') as string
@@ -29,38 +179,9 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
   return (
     <Container>
       <div className="items-wrapper">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {response.map(item => (
+          <Card key={item.id} title={item.name} price={item.price} />
+        ))}
       </div>
       <div className="right-section">
         <Navbar />

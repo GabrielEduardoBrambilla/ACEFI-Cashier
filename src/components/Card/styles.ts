@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
+export const Container = styled.button`
   display: flex;
   flex-direction: column;
   width: 100px;
@@ -30,7 +30,9 @@ export const Container = styled.div`
     object-fit: fill;
     /* background-color: red; */
   }
-
+  > p {
+    text-transform: capitalize;
+  }
   .title {
     margin: 10px 0 0 0;
     font-weight: bold;
