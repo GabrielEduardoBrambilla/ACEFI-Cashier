@@ -40,6 +40,13 @@ export const Container = styled.div<{ deleteHover?: boolean }>`
     font-weight: bold;
   }
 
+  &:hover {
+    background-color: ${({ theme }) => theme.COLORS.GREEN};
+    opacity: 0.9;
+    &:active {
+      opacity: 1;
+    }
+  }
   ${props =>
     props.deleteHover &&
     css`
