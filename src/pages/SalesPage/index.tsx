@@ -179,6 +179,22 @@ export const SalesPage: FC<SalesPageProps> = () => {
     }
   }
 
+  const handlePagoClick = async () => {
+    setItemsOrder([])
+    setReceivedAmount('')
+    // Send API request here using the data in itemsOrder and receivedAmount
+    try {
+      await api.post('/payment', {
+        items: itemsOrder,
+        receivedAmount: receivedAmount
+      })
+
+      // Reset itemsOrder and receivedAmount after successful payment
+    } catch (error) {
+      console.error('Error making payment:', error)
+    }
+  }
+
   // Calculate the total price and quantity of items in itemsOrder array
   const totalPrice = itemsOrder.reduce(
     (total, orderItem) => total + orderItem.price * orderItem.quantity,
@@ -255,7 +271,7 @@ export const SalesPage: FC<SalesPageProps> = () => {
               </tr>
             </tbody>
           </table>
-          <button>PAGO</button>
+          <button onClick={handlePagoClick}>PAGO</button>
         </div>
       </div>
     </Container>
