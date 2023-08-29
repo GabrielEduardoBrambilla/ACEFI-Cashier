@@ -34,10 +34,13 @@ export const Container = styled.div`
       width: 100%;
       height: 55vh;
       max-height: 56vh;
-      overflow-y: scroll;
+      tbody {
+        max-height: 56vh;
+        overflow-y: scroll;
+      }
       th {
         font-weight: bold;
-        flex: 1; /* Allow the items to expand and share equal width */
+        flex: 1;
         border-radius: 10px;
         padding: 2px;
         font-size: 14px;

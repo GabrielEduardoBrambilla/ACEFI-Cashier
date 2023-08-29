@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const Container = styled.button`
+export const Container = styled.div<{ deleteHover?: boolean }>`
   display: flex;
   flex-direction: column;
   width: 100px;
@@ -18,6 +18,7 @@ export const Container = styled.button`
   /* Black shadow with 10px blur */
 
   box-shadow: -5px 2px 5px 2px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 
   .counter {
     font-weight: bold;
@@ -27,9 +28,10 @@ export const Container = styled.button`
   > img {
     width: 100%;
     height: 50%;
+    background-color: transparent;
     object-fit: fill;
-    /* background-color: red; */
   }
+
   > p {
     text-transform: capitalize;
   }
@@ -37,4 +39,25 @@ export const Container = styled.button`
     margin: 10px 0 0 0;
     font-weight: bold;
   }
+
+  ${props =>
+    props.deleteHover &&
+    css`
+      &:hover {
+        > svg {
+          display: flex;
+          position: absolute;
+          align-items: center;
+          justify-content: center;
+          top: 25%;
+          left: 25%;
+          font-size: 45px;
+          border-radius: 50px;
+        }
+        background-color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
+        &:active {
+          background-color: ${({ theme }) => theme.COLORS.RED[100]};
+        }
+      }
+    `}
 `
