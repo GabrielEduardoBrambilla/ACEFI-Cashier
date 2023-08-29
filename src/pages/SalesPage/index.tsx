@@ -1,12 +1,11 @@
 import React, { FC, useState } from 'react'
 import { Container } from './styles.js'
-import { FaStore, FaUserCircle } from 'react-icons/fa'
-import { BsFiletypeXlsx } from 'react-icons/bs'
 import { Card } from '../../components/Card/index.js'
 import { Navbar } from '../../components/Navbar/index.js'
 import { api } from '../../services/api.js'
 
 interface Item {
+  quantity: number
   id: number
   user_id: number
   name: string
@@ -17,7 +16,9 @@ interface Item {
 interface SalesPageProps {}
 
 export const SalesPage: FC<SalesPageProps> = () => {
-  const [itemsOrder, setItemsOrder] = useState<Item[]>([]) // Fixed the state type
+  const [itemsOrder, setItemsOrder] = useState<Item[]>([])
+  const [receivedAmount, setReceivedAmount] = useState<number | ''>('')
+
   const response: Item[] = [
     {
       id: 1,
@@ -159,12 +160,43 @@ export const SalesPage: FC<SalesPageProps> = () => {
       price: 2.75,
       imageAddress: '2_chocolate-chip-muffin.jpg'
     }
-  ] // Your item data here
+  ]
 
   function handleAddItem(item: Item) {
-    setItemsOrder(prevOrder => [...prevOrder, item])
+    const existingItem = itemsOrder.find(orderItem => orderItem.id === item.id)
+
+    if (existingItem) {
+      // If the item already exists in itemsOrder, update its quantity
+      const updatedItems = itemsOrder.map(orderItem =>
+        orderItem.id === item.id
+          ? { ...orderItem, quantity: orderItem.quantity + 1 }
+          : orderItem
+      )
+      setItemsOrder(updatedItems)
+    } else {
+      // If the item doesn't exist in itemsOrder, add it with quantity 1
+      setItemsOrder(prevOrder => [...prevOrder, { ...item, quantity: 1 }])
+    }
   }
 
+  // Calculate the total price and quantity of items in itemsOrder array
+  const totalPrice = itemsOrder.reduce(
+    (total, orderItem) => total + orderItem.price * orderItem.quantity,
+    0
+  )
+  const roundedTotalPrice = totalPrice.toFixed(2)
+
+  const totalQuantity = itemsOrder.reduce(
+    (total, orderItem) => total + orderItem.quantity,
+    0
+  )
+  let changeAmount: string | React.ReactNode = ''
+  if (receivedAmount !== '') {
+    changeAmount = (receivedAmount - totalPrice).toFixed(2)
+    if (changeAmount < 0) {
+      changeAmount = ''
+    }
+  }
   return (
     <Container>
       <div className="items-wrapper">
@@ -190,11 +222,11 @@ export const SalesPage: FC<SalesPageProps> = () => {
             </tr>
           </thead>
           <tbody>
-            {response.map(item => (
-              <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>item_quant</td>
-                <td>{item.price}</td>
+            {itemsOrder.map(orderItem => (
+              <tr key={orderItem.id}>
+                <td>{orderItem.name}</td>
+                <td>{orderItem.quantity}</td>
+                <td>{orderItem.price}</td>
               </tr>
             ))}
           </tbody>
@@ -205,19 +237,21 @@ export const SalesPage: FC<SalesPageProps> = () => {
             <tbody>
               <tr>
                 <th>Total</th>
-                <td>R$ 25,50</td>
+                <td>R$ {totalPrice.toFixed(2)}</td>
               </tr>
               <tr>
                 <th>Recebido</th>
                 <td>
-                  {/* <form action="">
-                    <input type="number" />
-                  </form> */}
+                  <input
+                    type="number"
+                    value={receivedAmount}
+                    onChange={e => setReceivedAmount(Number(e.target.value))}
+                  />
                 </td>
               </tr>
               <tr>
                 <th>Troco</th>
-                <td>R$ 74,50</td>
+                <td>R$ {changeAmount}</td>
               </tr>
             </tbody>
           </table>
