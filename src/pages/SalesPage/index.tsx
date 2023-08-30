@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Container } from './styles.js'
 import { Card } from '../../components/Card/index.js'
 import { Navbar } from '../../components/Navbar/index.js'
@@ -18,150 +18,19 @@ interface SalesPageProps {}
 export const SalesPage: FC<SalesPageProps> = () => {
   const [itemsOrder, setItemsOrder] = useState<Item[]>([])
   const [receivedAmount, setReceivedAmount] = useState<number | ''>('')
+  const [response, setResponse] = useState([]) // State for storing items
 
-  const response: Item[] = [
-    {
-      id: 1,
-      user_id: 1,
-      name: 'chocolate bar',
-      price: 2.99,
-      imageAddress: '1_chocolate-bar.jpg'
-    },
-    {
-      id: 2,
-      user_id: 1,
-      name: 'apple',
-      price: 1.25,
-      imageAddress: '2_apple.jpg'
-    },
-    {
-      id: 3,
-      user_id: 1,
-      name: 'popcorn',
-      price: 3.5,
-      imageAddress: '3_popcorn.jpg'
-    },
-    {
-      id: 4,
-      user_id: 1,
-      name: 'soda',
-      price: 1.99,
-      imageAddress: '4_soda.jpg'
-    },
-    {
-      id: 5,
-      user_id: 1,
-      name: 'chips',
-      price: 2.75,
-      imageAddress: '5_chips.jpg'
-    },
-    {
-      id: 6,
-      user_id: 1,
-      name: 'orange',
-      price: 0.99,
-      imageAddress: '6_orange.jpg'
-    },
-    {
-      id: 7,
-      user_id: 1,
-      name: 'candy',
-      price: 0.75,
-      imageAddress: '7_candy.jpg'
-    },
-    {
-      id: 8,
-      user_id: 1,
-      name: 'water bottle',
-      price: 1.49,
-      imageAddress: '8_water-bottle.jpg'
-    },
-    {
-      id: 9,
-      user_id: 1,
-      name: 'granola bar',
-      price: 1.89,
-      imageAddress: '9_granola-bar.jpg'
-    },
-    {
-      id: 10,
-      user_id: 1,
-      name: 'cookie',
-      price: 1.25,
-      imageAddress: '210_cookie.jpg'
-    },
-    {
-      id: 11,
-      user_id: 1,
-      name: 'pretzel',
-      price: 1.75,
-      imageAddress: '211_pretzel.jpg'
-    },
-    {
-      id: 12,
-      user_id: 1,
-      name: 'banana',
-      price: 0.75,
-      imageAddress: '212_banana.jpg'
-    },
-    {
-      id: 13,
-      user_id: 1,
-      name: 'gummy bears',
-      price: 2.25,
-      imageAddress: '213_gummy-bears.jpg'
-    },
-    {
-      id: 14,
-      user_id: 1,
-      name: 'trail mix',
-      price: 3.99,
-      imageAddress: '214_trail-mix.jpg'
-    },
-    {
-      id: 15,
-      user_id: 1,
-      name: 'yogurt',
-      price: 2.49,
-      imageAddress: '215_yogurt.jpg'
-    },
-    {
-      id: 16,
-      user_id: 1,
-      name: 'caramel popcorn',
-      price: 4.25,
-      imageAddress: '216_caramel-popcorn.jpg'
-    },
-    {
-      id: 17,
-      user_id: 1,
-      name: 'chocolate milk',
-      price: 1.99,
-      imageAddress: '217_chocolate-milk.jpg'
-    },
-    {
-      id: 18,
-      user_id: 1,
-      name: 'crackers',
-      price: 1.29,
-      imageAddress: '218_crackers.jpg'
-    },
-    {
-      id: 19,
-      user_id: 1,
-      name: 'pineapple',
-      price: 1.99,
-      imageAddress: '219_pineapple.jpg'
-    },
-    {
-      id: 20,
-      user_id: 1,
-      name: 'chocolate',
-      price: 2.75,
-      imageAddress: '2_chocolate-chip-muffin.jpg'
-    }
-  ]
-
+  const fetchItems = () => {
+    api
+      .get('/produtos')
+      .then(function (response) {
+        setResponse(response.data) // Update items state with fetched data
+        console.log(response.data)
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+  }
   function handleAddItem(item: Item) {
     const existingItem = itemsOrder.find(orderItem => orderItem.id === item.id)
 
@@ -182,11 +51,12 @@ export const SalesPage: FC<SalesPageProps> = () => {
   const handlePagoClick = async () => {
     setItemsOrder([])
     setReceivedAmount('')
+    console.log(itemsOrder.id)
     // Send API request here using the data in itemsOrder and receivedAmount
     try {
-      await api.post('/payment', {
-        items: itemsOrder,
-        receivedAmount: receivedAmount
+      await api.post('/Order', {
+        item_id: itemsOrder.id,
+        quantity: itemsOrder.quantity
       })
 
       // Reset itemsOrder and receivedAmount after successful payment
@@ -213,6 +83,9 @@ export const SalesPage: FC<SalesPageProps> = () => {
       changeAmount = ''
     }
   }
+  useEffect(() => {
+    fetchItems()
+  }, [])
   return (
     <Container>
       <div className="items-wrapper">
