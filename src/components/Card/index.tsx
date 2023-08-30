@@ -9,7 +9,7 @@ interface CardProps {
   price: GLfloat
   deleteHover?: boolean
   counter?: number
-  onClick?: () => void // Define the 'onClick' prop
+  onClick?: () => void
 }
 
 export const Card: FC<CardProps> = ({

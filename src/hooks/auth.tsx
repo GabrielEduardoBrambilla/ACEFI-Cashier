@@ -36,13 +36,16 @@ function AuthProvider({ children }: AuthProviderProps) {
     password: string
   }) => {
     try {
-      const response = await api.post('/sessions', { email, password })
-      const { user, token } = response.data
+      const response = await api.post('signin', {
+        email: email,
+        password: password
+      })
+      const { user, accessToken } = response.data
 
       localStorage.setItem('@ccsystem:user', JSON.stringify(user))
-      localStorage.setItem('@ccsystem:token', token)
+      localStorage.setItem('@ccsystem:token', accessToken)
 
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
       setData({
         user,
         token,
@@ -51,7 +54,7 @@ function AuthProvider({ children }: AuthProviderProps) {
       })
     } catch (error: any) {
       if (error.response) {
-        alert(error.response.data.message)
+        alert(error)
       } else {
         alert('Not possible to login')
       }

@@ -20,9 +20,9 @@ export const SignUp: FC<SignUpProps> = () => {
     }
     api
       .post('/signup', {
-        nome: name,
+        name: name,
         email: email,
-        senha: password
+        password: password
       })
       .then(function (response) {
         console.log('SUCESSFUL RESPONSE')
