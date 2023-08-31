@@ -7,9 +7,15 @@ import { Card } from '../../components/Card/index.js'
 import { Navbar } from '../../components/Navbar/index.js'
 
 interface ItemRegisterProps {}
+interface Item {
+  id: number
+  name: string
+  price: number
+}
 
 export const ItemRegister: FC<ItemRegisterProps> = () => {
-  const [response, setResponse] = useState([]) // State for storing items
+  const [response, setResponse] = useState<Item[]>([])
+
   const fetchItems = () => {
     api
       .get('/produtos')
@@ -24,7 +30,6 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
   function handleItemRegister(data: FormData) {
     const nome = data.get('nome') as string
     const preco = data.get('preco') as string
-    const file = data.get('selectedFile') as File
 
     console.log(preco)
     api

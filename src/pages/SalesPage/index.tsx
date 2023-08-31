@@ -14,11 +14,17 @@ interface Item {
 }
 
 interface SalesPageProps {}
+interface Item {
+  id: number
+  name: string
+  price: number
+}
 
 export const SalesPage: FC<SalesPageProps> = () => {
   const [itemsOrder, setItemsOrder] = useState<Item[]>([])
+  const [response, setResponse] = useState<Item[]>([])
   const [receivedAmount, setReceivedAmount] = useState<number | ''>('')
-  const [response, setResponse] = useState([]) // State for storing items
+  let changeAmount: string = ''
 
   const fetchItems = () => {
     api
@@ -49,17 +55,21 @@ export const SalesPage: FC<SalesPageProps> = () => {
   }
 
   const handlePagoClick = async () => {
-    setItemsOrder([])
-    setReceivedAmount('')
-    console.log(itemsOrder.id)
-    // Send API request here using the data in itemsOrder and receivedAmount
+    // Create an array of JSON objects using map
+    const requestJson = itemsOrder.map(item => {
+      return {
+        item_id: item.id,
+        quantity: item.quantity
+      }
+    })
+
     try {
-      await api.post('/Order', {
-        item_id: itemsOrder.id,
-        quantity: itemsOrder.quantity
-      })
+      // Send API request using the created JSON array
+      await api.post('/Order', requestJson)
 
       // Reset itemsOrder and receivedAmount after successful payment
+      setItemsOrder([])
+      setReceivedAmount('')
     } catch (error) {
       console.error('Error making payment:', error)
     }
@@ -76,16 +86,35 @@ export const SalesPage: FC<SalesPageProps> = () => {
     (total, orderItem) => total + orderItem.quantity,
     0
   )
-  let changeAmount: string | React.ReactNode = ''
   if (receivedAmount !== '') {
     changeAmount = (receivedAmount - totalPrice).toFixed(2)
-    if (changeAmount < 0) {
+    const numericChangeAmount = parseFloat(changeAmount) // Convert changeAmount to a number
+    if (numericChangeAmount < 0) {
       changeAmount = ''
     }
   }
+  function handleIncreaseQuantity(itemId: number) {
+    const updatedItems = itemsOrder.map(orderItem =>
+      orderItem.id === itemId
+        ? { ...orderItem, quantity: orderItem.quantity + 1 }
+        : orderItem
+    )
+    setItemsOrder(updatedItems)
+  }
+
+  function handleDecreaseQuantity(itemId: number) {
+    const updatedItems = itemsOrder.map(orderItem =>
+      orderItem.id === itemId && orderItem.quantity > 0
+        ? { ...orderItem, quantity: orderItem.quantity - 1 }
+        : orderItem
+    )
+    setItemsOrder(updatedItems.filter(orderItem => orderItem.quantity > 0))
+  }
+
   useEffect(() => {
     fetchItems()
   }, [])
+
   return (
     <Container>
       <div className="items-wrapper">
@@ -114,7 +143,16 @@ export const SalesPage: FC<SalesPageProps> = () => {
             {itemsOrder.map(orderItem => (
               <tr key={orderItem.id}>
                 <td>{orderItem.name}</td>
-                <td>{orderItem.quantity}</td>
+                <td>
+                  <button onClick={() => handleDecreaseQuantity(orderItem.id)}>
+                    -
+                  </button>
+                  {orderItem.quantity}
+                  <button onClick={() => handleIncreaseQuantity(orderItem.id)}>
+                    +
+                  </button>
+                </td>
+
                 <td>{orderItem.price}</td>
               </tr>
             ))}
