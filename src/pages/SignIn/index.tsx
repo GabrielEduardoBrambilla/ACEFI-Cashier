@@ -1,6 +1,6 @@
 import { Form } from '../../components/Form'
 import { FC } from 'react'
-import CapivaraOnLake from '../../assets/Cartoon.png'
+import logo from '../../assets/HOPIC.png'
 import { Container } from './styles'
 import { useAuth } from '../../hooks/auth.js'
 
@@ -17,8 +17,14 @@ export const SignIn: FC<SignInProps> = () => {
   return (
     <Container className="flex justify-center  h-[100vh] bg-purple-700">
       <div className="logo-section">
-        <p> CCS</p>
-        <img src={CapivaraOnLake} alt="" />
+        <img src={logo} alt="" />
+        <div className="logo-text">
+          <p> S</p>
+          <p> T</p>
+          <p> O</p>
+          <p> R</p>
+          <p> E</p>
+        </div>
       </div>
       <div className="form-section">
         <Form

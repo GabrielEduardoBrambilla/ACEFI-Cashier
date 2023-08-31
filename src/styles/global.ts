@@ -6,6 +6,11 @@ html:root{
    font-size: 62.5%;
 }
 
+  @font-face {
+    font-family: 'Minecrafter';
+    src: url('../assets/font/Minecrafter.Reg.ttf') format('truetype'); /* Adjust the file path and format as needed */
+  }
+
   *{
     margin: 0;
     padding: 0;

@@ -16,10 +16,15 @@ export const Container = styled.div`
     justify-content: center;
     height: 100%;
     margin: 10px;
-    p {
-      color: ${({ theme }) => theme.COLORS.FONT[200]};
 
-      font-family: Inter;
+    .logo-text {
+      display: flex;
+      justify-content: space-between;
+      color: ${({ theme }) => theme.COLORS.FONT[200]};
+      width: 100%;
+      padding: 0 15px;
+      letter-spacing: normal;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
       font-size: 48px;
       font-style: normal;
       font-weight: 700;
