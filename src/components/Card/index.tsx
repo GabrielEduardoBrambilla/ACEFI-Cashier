@@ -8,7 +8,7 @@ interface CardProps {
   title: string
   price: GLfloat
   deleteHover?: boolean
-  counter?: number
+  counter?: number | null
   onClick?: () => void
 }
 

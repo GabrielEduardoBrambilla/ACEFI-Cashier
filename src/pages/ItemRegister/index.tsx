@@ -68,11 +68,11 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
   return (
     <Container>
       <div className="items-wrapper">
-        {response.map(item => (
+        {response.map((item, index) => (
           <Card
             onClick={() => handleItemDeletion(item)}
             deleteHover
-            counter={item.id}
+            counter={index < 9 ? index + 1 : null}
             key={item.id}
             title={item.name}
             price={item.price}

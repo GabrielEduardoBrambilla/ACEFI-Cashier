@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState, useRef } from 'react'
 import { Container } from './styles.js'
 import { Card } from '../../components/Card/index.js'
 import { Navbar } from '../../components/Navbar/index.js'
@@ -26,31 +26,36 @@ export const SalesPage: FC<SalesPageProps> = () => {
   const [receivedAmount, setReceivedAmount] = useState<number | ''>('')
   let changeAmount: string = ''
 
+  const receivedAmountRef = useRef<HTMLInputElement | null>(null) // Create a ref for the input field
+
   const fetchItems = () => {
     api
       .get('/produtos')
       .then(function (response) {
         setResponse(response.data) // Update items state with fetched data
-        console.log(response.data)
       })
       .catch(function (error) {
         console.error(error)
       })
   }
-  function handleAddItem(item: Item) {
-    const existingItem = itemsOrder.find(orderItem => orderItem.id === item.id)
+  function handleAddItem(item_id: number) {
+    const existingItem = itemsOrder.find(orderItem => orderItem.id === item_id)
 
     if (existingItem) {
       // If the item already exists in itemsOrder, update its quantity
       const updatedItems = itemsOrder.map(orderItem =>
-        orderItem.id === item.id
+        orderItem.id === item_id
           ? { ...orderItem, quantity: orderItem.quantity + 1 }
           : orderItem
       )
       setItemsOrder(updatedItems)
     } else {
       // If the item doesn't exist in itemsOrder, add it with quantity 1
-      setItemsOrder(prevOrder => [...prevOrder, { ...item, quantity: 1 }])
+      const newItem = response.find(item => item.id === item_id)
+      if (newItem) {
+        // Add the item with quantity 1 to the order
+        setItemsOrder(prevOrder => [...prevOrder, { ...newItem, quantity: 1 }])
+      }
     }
   }
 
@@ -80,12 +85,7 @@ export const SalesPage: FC<SalesPageProps> = () => {
     (total, orderItem) => total + orderItem.price * orderItem.quantity,
     0
   )
-  const roundedTotalPrice = totalPrice.toFixed(2)
 
-  const totalQuantity = itemsOrder.reduce(
-    (total, orderItem) => total + orderItem.quantity,
-    0
-  )
   if (receivedAmount !== '') {
     changeAmount = (receivedAmount - totalPrice).toFixed(2)
     const numericChangeAmount = parseFloat(changeAmount) // Convert changeAmount to a number
@@ -112,17 +112,33 @@ export const SalesPage: FC<SalesPageProps> = () => {
   }
 
   useEffect(() => {
+    // Fetch data when the component mounts
     fetchItems()
-  }, [])
+
+    // Add key press event listener when the component mounts
+    const handleKeyPress = (event: KeyboardEvent) => {
+      const keyNumber = parseInt(event.key)
+      if (keyNumber >= 1 && keyNumber <= 9 && response[keyNumber - 1]) {
+        const item_idToAdd = response[keyNumber - 1].id
+        handleAddItem(item_idToAdd)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyPress)
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [response])
 
   return (
     <Container>
       <div className="items-wrapper">
-        {response.map(item => (
-          <div key={item.id} onClick={() => handleAddItem(item)}>
+        {response.map((item, index) => (
+          <div key={item.id} onClick={() => handleAddItem(item.id)}>
             <Card
-              counter={item.id}
-              key={item.id}
+              counter={index < 9 ? index + 1 : null}
               title={item.name}
               price={item.price}
             />
@@ -170,9 +186,16 @@ export const SalesPage: FC<SalesPageProps> = () => {
                 <th>Recebido</th>
                 <td>
                   <input
+                    ref={receivedAmountRef} // Attach the ref to the input field
                     type="number"
+                    tabIndex={1} // Specify the tab order
                     value={receivedAmount}
                     onChange={e => setReceivedAmount(Number(e.target.value))}
+                    onKeyPress={e => {
+                      if (e.key === 'Enter') {
+                        handlePagoClick() // Trigger form submission on Enter key press
+                      }
+                    }}
                   />
                 </td>
               </tr>
