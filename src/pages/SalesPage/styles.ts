@@ -72,11 +72,24 @@ export const Container = styled.div`
       width: 90%;
 
       border-top: 3px solid black;
+
+      .received {
+        border: 3px solid black;
+        width: 50%;
+        border-radius: 10px;
+        background-color: transparent;
+        background-color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
+        opacity: 0.8;
+        text-align: center;
+        &::placeholder {
+          color: ${({ theme }) => theme.COLORS.FONT[100]};
+        }
+      }
       tr {
         display: flex; /* Display the row items in a row */
         align-items: center;
         grid-column: 1 / -1;
-        text-align: right;
+        text-align: center;
         th {
           font-weight: bold;
           flex: 1; /* Allow the items to expand and share equal width */
@@ -88,16 +101,8 @@ export const Container = styled.div`
           flex: 1; /* Allow the items to expand and share equal width */
           border-radius: 10px;
           padding: 2px; /* Adjust padding as needed */
-          padding: 0 10px 0 0;
-        }
-        &:nth-child(even) {
-          background-color: ${({ theme }) =>
-            theme.COLORS
-              .CONTRAST[200]}; /* You can adjust the background color here */
-          border-radius: 20px;
         }
       }
-
       button {
         background-color: ${({ theme }) => theme.COLORS.RED[100]};
         color: ${({ theme }) => theme.COLORS.CONTRAST[100]};

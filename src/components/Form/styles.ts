@@ -31,6 +31,15 @@ export const FormContainer = styled.form<{ product?: boolean }>`
     font-weight: 500;
     line-height: normal;
   }
+  .userOptions {
+    display: flex;
+    width: 100%;
+    gap: 5px;
+
+    justify-content: space-between;
+    flex-direction: column;
+  }
+
   > div {
     position: relative;
     width: 100%;
@@ -115,8 +124,6 @@ export const FormContainer = styled.form<{ product?: boolean }>`
       }
     }
     #color_input {
-      -webkit-appearance: none;
-      -moz-appearance: none;
       width: 50px;
       height: 20px;
       border-radius: 5px;

@@ -1,6 +1,5 @@
 import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react'
 import { FormContainer, Container } from './styles'
-import { FiUpload } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 
 interface FormProps {
@@ -12,7 +11,9 @@ interface FormProps {
   warningMsg?: string
   ActionButton: string
   input1Title?: string
+  input1Type?: string
   input2Title?: string
+  input2Type?: string
 }
 
 export const Form: FC<FormProps> = ({
@@ -24,6 +25,8 @@ export const Form: FC<FormProps> = ({
   ActionButton,
   input1Title,
   input2Title,
+  input1Type,
+  input2Type,
   onSubmit
 }: FormProps) => {
   const [data] = useState(new FormData())
@@ -54,6 +57,7 @@ export const Form: FC<FormProps> = ({
         <div>
           <input
             name={input1Title || 'email'}
+            type={input1Type || 'email'}
             placeholder={input1Title || 'E-mail'}
             onChange={handleInputChange}
           />
@@ -61,6 +65,7 @@ export const Form: FC<FormProps> = ({
         <div>
           <input
             name={input2Title || 'password'}
+            type={input2Type || 'password'}
             placeholder={input2Title || 'Senha'}
             onChange={handleInputChange}
           />
@@ -75,10 +80,26 @@ export const Form: FC<FormProps> = ({
           </div>
         )}
         {signIn && (
-          <span className="newRegister">
-            <Link to="/SignUp">Novo? Registre-se aqui!</Link>
-          </span>
+          <p className="userOptions">
+            <span className="newRegister">
+              <Link to="/SignUp">Novo? Registre-se aqui!</Link>
+            </span>
+            <span className="newRegister">
+              <Link to="/SignUp">Esqueci minha senha '-'</Link>
+            </span>
+          </p>
         )}
+        {signUp && (
+          <p className="userOptions">
+            <span className="newRegister">
+              <Link to="/">Registrado! Faça login aqui!</Link>
+            </span>
+            <span className="newRegister">
+              <Link to="/SignUp">Verificar email</Link>
+            </span>
+          </p>
+        )}
+
         {newProduct && (
           <div className="newProd">
             <input

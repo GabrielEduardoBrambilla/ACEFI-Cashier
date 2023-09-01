@@ -106,7 +106,9 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
             onSubmit={handleItemRegister}
             newProduct
             input1Title="nome"
+            input1Type="text"
             input2Title="preco"
+            input2Type="number"
             formTitle="Registrar um novo Item"
             ActionButton="Registrar item"
           />

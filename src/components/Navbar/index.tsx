@@ -4,7 +4,7 @@ import { RiFileExcel2Fill } from 'react-icons/ri'
 import { FaStore } from 'react-icons/fa'
 import { RiLogoutCircleRLine } from 'react-icons/ri'
 import { ImHome3 } from 'react-icons/im'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { api } from '../../services/api'
 import { toast } from 'react-toastify'
 import { useAuth } from '../../hooks/auth.js'
@@ -15,7 +15,12 @@ interface NavbarProps {
 
 export const Navbar: FC<NavbarProps> = ({ store }: NavbarProps) => {
   const { signOut } = useAuth()
+  const navigate = useNavigate()
 
+  const handleSignOut = () => {
+    signOut()
+    navigate('/')
+  }
   const fetchXLSX = async () => {
     try {
       toast.info('Iniciando download, aguarde um momento', {
@@ -67,7 +72,7 @@ export const Navbar: FC<NavbarProps> = ({ store }: NavbarProps) => {
           <ImHome3 />
         </Link>
       )}
-      <div className="log-out" onClick={signOut}>
+      <div className="log-out" onClick={handleSignOut}>
         <RiLogoutCircleRLine title="Logout" />
       </div>
     </Container>

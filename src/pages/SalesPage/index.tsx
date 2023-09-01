@@ -8,42 +8,37 @@ import { toast } from 'react-toastify'
 interface Item {
   quantity: number
   id: number
-  user_id: number
   name: string
   price: number
-  imageAddress: string
+  color: string // Added the color property
 }
 
 interface SalesPageProps {}
-interface Item {
-  id: number
-  name: string
-  price: number
-}
 
 export const SalesPage: FC<SalesPageProps> = () => {
   const [itemsOrder, setItemsOrder] = useState<Item[]>([])
   const [response, setResponse] = useState<Item[]>([])
-  const [receivedAmount, setReceivedAmount] = useState<number | ''>('')
+  const [receivedAmount, setReceivedAmount] = useState<string>('')
+  const [isInReceivedInput, setIsInReceivedInput] = useState(false)
   let changeAmount: string = ''
 
-  const receivedAmountRef = useRef<HTMLInputElement | null>(null) // Create a ref for the input field
+  const receivedAmountRef = useRef<HTMLInputElement | null>(null)
 
   const fetchItems = () => {
     api
       .get('/produtos')
       .then(function (response) {
-        setResponse(response.data) // Update items state with fetched data
+        setResponse(response.data)
       })
       .catch(function (error) {
         console.error(error)
       })
   }
+
   function handleAddItem(item_id: number) {
     const existingItem = itemsOrder.find(orderItem => orderItem.id === item_id)
 
     if (existingItem) {
-      // If the item already exists in itemsOrder, update its quantity
       const updatedItems = itemsOrder.map(orderItem =>
         orderItem.id === item_id
           ? { ...orderItem, quantity: orderItem.quantity + 1 }
@@ -51,17 +46,14 @@ export const SalesPage: FC<SalesPageProps> = () => {
       )
       setItemsOrder(updatedItems)
     } else {
-      // If the item doesn't exist in itemsOrder, add it with quantity 1
       const newItem = response.find(item => item.id === item_id)
       if (newItem) {
-        // Add the item with quantity 1 to the order
         setItemsOrder(prevOrder => [...prevOrder, { ...newItem, quantity: 1 }])
       }
     }
   }
 
   const handlePagoClick = async () => {
-    // Create an array of JSON objects using map
     const requestJson = itemsOrder.map(item => {
       return {
         item_id: item.id,
@@ -70,10 +62,8 @@ export const SalesPage: FC<SalesPageProps> = () => {
     })
 
     try {
-      // Send API request using the created JSON array
       await api.post('/Order', requestJson)
 
-      // Reset itemsOrder and receivedAmount after successful payment
       setItemsOrder([])
       setReceivedAmount('')
       toast.success('Venda registrada', {
@@ -88,21 +78,23 @@ export const SalesPage: FC<SalesPageProps> = () => {
     } catch (error) {
       console.error('Error making payment:', error)
     }
+    if (receivedAmountRef.current) {
+      receivedAmountRef.current.blur()
+    }
   }
 
-  // Calculate the total price and quantity of items in itemsOrder array
   const totalPrice = itemsOrder.reduce(
     (total, orderItem) => total + orderItem.price * orderItem.quantity,
     0
   )
 
   if (receivedAmount !== '') {
-    changeAmount = (receivedAmount - totalPrice).toFixed(2)
-    const numericChangeAmount = parseFloat(changeAmount) // Convert changeAmount to a number
-    if (numericChangeAmount < 0) {
+    changeAmount = (parseFloat(receivedAmount) - totalPrice).toFixed(2)
+    if (parseFloat(changeAmount) < 0) {
       changeAmount = ''
     }
   }
+
   function handleIncreaseQuantity(itemId: number) {
     const updatedItems = itemsOrder.map(orderItem =>
       orderItem.id === itemId
@@ -122,23 +114,40 @@ export const SalesPage: FC<SalesPageProps> = () => {
   }
 
   useEffect(() => {
-    // Fetch data when the component mounts
     fetchItems()
 
-    // Add key press event listener when the component mounts
     const handleKeyPress = (event: KeyboardEvent) => {
-      const keyNumber = parseInt(event.key)
-      if (keyNumber >= 1 && keyNumber <= 9 && response[keyNumber - 1]) {
-        const item_idToAdd = response[keyNumber - 1].id
-        handleAddItem(item_idToAdd)
+      if (!isInReceivedInput) {
+        const keyNumber = parseInt(event.key)
+        if (keyNumber >= 1 && keyNumber <= 9 && response[keyNumber - 1]) {
+          const item_idToAdd = response[keyNumber - 1].id
+          handleAddItem(item_idToAdd)
+        }
+      }
+    }
+
+    const handleTabKeyPress = (event: KeyboardEvent) => {
+      if (event.key === 'Tab' && receivedAmountRef.current) {
+        event.preventDefault()
+        receivedAmountRef.current.focus()
+      }
+    }
+
+    const handleQKeyPress = (event: KeyboardEvent) => {
+      if (event.key === 'q' && receivedAmountRef.current) {
+        event.preventDefault()
+        receivedAmountRef.current.focus()
       }
     }
 
     window.addEventListener('keydown', handleKeyPress)
+    window.addEventListener('keydown', handleTabKeyPress)
+    window.addEventListener('keydown', handleQKeyPress)
 
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener('keydown', handleKeyPress)
+      window.removeEventListener('keydown', handleTabKeyPress)
+      window.removeEventListener('keydown', handleQKeyPress)
     }
   }, [response])
 
@@ -148,7 +157,7 @@ export const SalesPage: FC<SalesPageProps> = () => {
         {response.map((item, index) => (
           <div key={item.id} onClick={() => handleAddItem(item.id)}>
             <Card
-              color="6A1670"
+              color={item.color}
               counter={index < 9 ? index + 1 : null}
               title={item.name}
               price={item.price}
@@ -179,7 +188,6 @@ export const SalesPage: FC<SalesPageProps> = () => {
                     +
                   </button>
                 </td>
-
                 <td>{orderItem.price}</td>
               </tr>
             ))}
@@ -197,14 +205,18 @@ export const SalesPage: FC<SalesPageProps> = () => {
                 <th>Recebido</th>
                 <td>
                   <input
-                    ref={receivedAmountRef} // Attach the ref to the input field
+                    className="received"
+                    ref={receivedAmountRef}
                     type="number"
-                    tabIndex={1} // Specify the tab order
+                    placeholder="Valor recebido"
+                    tabIndex={1}
+                    onFocus={() => setIsInReceivedInput(true)} // Set the flag when the input is focused
+                    onBlur={() => setIsInReceivedInput(false)} // Reset the flag when the input loses focus
                     value={receivedAmount}
-                    onChange={e => setReceivedAmount(Number(e.target.value))}
+                    onChange={e => setReceivedAmount(e.target.value)}
                     onKeyPress={e => {
                       if (e.key === 'Enter') {
-                        handlePagoClick() // Trigger form submission on Enter key press
+                        handlePagoClick()
                       }
                     }}
                   />
