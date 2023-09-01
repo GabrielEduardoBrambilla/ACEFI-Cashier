@@ -27,7 +27,7 @@ export const Form: FC<FormProps> = ({
   onSubmit
 }: FormProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [data, setData] = useState(new FormData())
+  const [data] = useState(new FormData())
   const warningDisplay = waringMsn ? true : false
 
   function handleSubmit(e: FormEvent) {

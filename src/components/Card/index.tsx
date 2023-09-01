@@ -1,9 +1,9 @@
 import { FC } from 'react'
 import { Container } from './styles'
 import { MdDeleteForever } from 'react-icons/md'
-import { FaCircle, FaClone, FaDiceD6 } from 'react-icons/fa'
+import { FaClone } from 'react-icons/fa'
 import { useTheme } from 'styled-components'
-
+// FaDiceD6
 interface CardProps {
   title: string
   price: GLfloat
@@ -29,10 +29,7 @@ export const Card: FC<CardProps> = ({
       <span className="counter">{counter}</span>
       {/* <img src={image} alt={image || 'imagem descritiva do item'} /> */}
       <div className="icon">
-        <FaDiceD6 style={{ color: `#${color}` || theme.COLORS.HAPPY_GREEN }} />
-
-        {/* <FaClone style={{ color: `#${color}` || theme.COLORS.HAPPY_GREEN }} /> */}
-        {/* <FaCircle style={{ color: `#${color}` || theme.COLORS.HAPPY_GREEN }}/> */}
+        <FaClone style={{ color: `#${color}` || theme.COLORS.HAPPY_GREEN }} />
       </div>
       <MdDeleteForever />
       <div className="text">

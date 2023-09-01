@@ -89,6 +89,7 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
             counter={index < 9 ? index + 1 : null}
             key={item.id}
             color="0B3B7A"
+            // color={item.color}
             title={item.name}
             price={item.price}
           />

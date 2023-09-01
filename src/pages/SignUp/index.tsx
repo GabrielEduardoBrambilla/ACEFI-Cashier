@@ -1,6 +1,6 @@
 import { Form } from '../../components/Form/index.js'
 import { FC } from 'react'
-import logo from '../../assets/HOPIC.png'
+import logo from '../../assets/HOPIC_SHARP.png'
 import { Container } from './styles.js'
 import { api } from '../../services/api.js'
 

@@ -1,6 +1,6 @@
 import { Form } from '../../components/Form'
 import { FC } from 'react'
-import logo from '../../assets/HOPIC.png'
+import logo from '../../assets/HOPIC_SHARP.png'
 import { Container } from './styles'
 import { useAuth } from '../../hooks/auth.js'
 
