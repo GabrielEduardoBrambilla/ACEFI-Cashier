@@ -36,7 +36,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     password: string
   }) => {
     try {
-      const response = await api.post('signin', {
+      const response = await api.post('/signin', {
         email: email,
         password: password
       })

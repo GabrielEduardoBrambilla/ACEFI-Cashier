@@ -10,7 +10,9 @@ export const SignIn: FC<SignInProps> = () => {
   const { signIn } = useAuth()
   function handleSignIn(data: FormData) {
     const email = data.get('email') as string
-    const password = data.get('senha') as string
+    const password = data.get('password') as string
+    console.log(email)
+    console.log(password)
     signIn({ email, password })
   }
 

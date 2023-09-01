@@ -32,7 +32,6 @@ export const Form: FC<FormProps> = ({
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    console.log(data)
     onSubmit(data)
   }
 

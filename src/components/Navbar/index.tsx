@@ -7,12 +7,15 @@ import { ImHome3 } from 'react-icons/im'
 import { Link } from 'react-router-dom'
 import { api } from '../../services/api'
 import { toast } from 'react-toastify'
+import { useAuth } from '../../hooks/auth.js'
 
 interface NavbarProps {
   store?: boolean
 }
 
 export const Navbar: FC<NavbarProps> = ({ store }: NavbarProps) => {
+  const { signOut } = useAuth()
+
   const fetchXLSX = async () => {
     try {
       toast.info('Iniciando download, aguarde um momento', {
@@ -64,7 +67,9 @@ export const Navbar: FC<NavbarProps> = ({ store }: NavbarProps) => {
           <ImHome3 />
         </Link>
       )}
-      <RiLogoutCircleRLine title="Logout" />
+      <div className="log-out" onClick={signOut}>
+        <RiLogoutCircleRLine title="Logout" />
+      </div>
     </Container>
   )
 }
