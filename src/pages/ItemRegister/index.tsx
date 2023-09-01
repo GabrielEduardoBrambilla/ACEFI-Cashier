@@ -5,6 +5,7 @@ import { Container } from './styles.js'
 import { api } from '../../services/api.js'
 import { Card } from '../../components/Card/index.js'
 import { Navbar } from '../../components/Navbar/index.js'
+import { ToastContainer, toast } from 'react-toastify'
 
 interface ItemRegisterProps {}
 interface Item {
@@ -15,7 +16,6 @@ interface Item {
 
 export const ItemRegister: FC<ItemRegisterProps> = () => {
   const [response, setResponse] = useState<Item[]>([])
-
   const fetchItems = () => {
     api
       .get('/produtos')
@@ -37,9 +37,16 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
         name: nome,
         price: preco
       })
-      .then(function (response) {
-        console.log('SUCESSFUL RESPONSE')
-        console.log(response)
+      .then(function () {
+        toast.success('Item registrado com sucesso', {
+          position: 'bottom-left',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light'
+        })
         fetchItems()
       })
       .catch(function (error) {
@@ -51,9 +58,16 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
     const id = item.id
     api
       .delete(`/produtos/${id}`, {})
-      .then(function (response) {
-        console.log('SUCESSFUL RESPONSE')
-        console.log(response)
+      .then(function () {
+        toast.warning('Item deletado com sucesso', {
+          position: 'bottom-left',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light'
+        })
         fetchItems()
       })
       .catch(function (error) {

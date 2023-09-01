@@ -3,6 +3,7 @@ import { Container } from './styles.js'
 import { Card } from '../../components/Card/index.js'
 import { Navbar } from '../../components/Navbar/index.js'
 import { api } from '../../services/api.js'
+import { toast } from 'react-toastify'
 
 interface Item {
   quantity: number
@@ -75,6 +76,15 @@ export const SalesPage: FC<SalesPageProps> = () => {
       // Reset itemsOrder and receivedAmount after successful payment
       setItemsOrder([])
       setReceivedAmount('')
+      toast.success('Venda registrada', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
     } catch (error) {
       console.error('Error making payment:', error)
     }

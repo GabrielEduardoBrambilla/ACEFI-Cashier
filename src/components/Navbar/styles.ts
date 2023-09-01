@@ -7,6 +7,15 @@ export const Container = styled.nav`
   font-size: 30px;
   color: ${({ theme }) => theme.COLORS.FONT[200]};
   margin: 5px;
+  svg {
+    cursor: pointer;
+    &:active {
+      opacity: 0.8;
+    }
+    &:hover {
+      opacity: 0.8;
+    }
+  }
   .store-btn {
     display: flex;
     align-items: center;

@@ -1,10 +1,12 @@
 import { FC } from 'react'
 import { Container } from './styles'
 import { RiFileExcel2Fill } from 'react-icons/ri'
-import { FaStore, FaUserCircle } from 'react-icons/fa'
+import { FaStore } from 'react-icons/fa'
+import { RiLogoutCircleRLine } from 'react-icons/ri'
 import { ImHome3 } from 'react-icons/im'
 import { Link } from 'react-router-dom'
 import { api } from '../../services/api'
+import { toast } from 'react-toastify'
 
 interface NavbarProps {
   store?: boolean
@@ -13,6 +15,15 @@ interface NavbarProps {
 export const Navbar: FC<NavbarProps> = ({ store }: NavbarProps) => {
   const fetchXLSX = async () => {
     try {
+      toast.info('Iniciando download, aguarde um momento', {
+        position: 'bottom-left',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
       const response = await api.get('/getXLSX', { responseType: 'blob' })
 
       // Create a Blob from the response data
@@ -26,8 +37,7 @@ export const Navbar: FC<NavbarProps> = ({ store }: NavbarProps) => {
       // Create a temporary link element to initiate download
       const link = document.createElement('a')
       link.href = url
-      link.download = 'relatorio_compras.xlsx' // Set the desired filename
-
+      link.download = 'relatorio_vendas.xlsx' // Set the desired filename
       // Trigger a click on the link to start the download
       link.click()
 
@@ -54,7 +64,7 @@ export const Navbar: FC<NavbarProps> = ({ store }: NavbarProps) => {
           <ImHome3 />
         </Link>
       )}
-      <FaUserCircle title="Logout" />
+      <RiLogoutCircleRLine title="Logout" />
     </Container>
   )
 }
