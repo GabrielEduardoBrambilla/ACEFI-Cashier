@@ -1,4 +1,4 @@
-import { FC, useState, ChangeEvent, FormEvent } from 'react'
+import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react'
 import { FormContainer, Container } from './styles'
 import { FiUpload } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
@@ -9,7 +9,7 @@ interface FormProps {
   newProduct?: boolean
   signIn?: boolean
   formTitle?: string
-  waringMsn?: string
+  warningMsg?: string
   ActionButton: string
   input1Title?: string
   input2Title?: string
@@ -20,37 +20,34 @@ export const Form: FC<FormProps> = ({
   newProduct,
   signIn,
   formTitle,
-  waringMsn,
+  warningMsg,
   ActionButton,
   input1Title,
   input2Title,
   onSubmit
 }: FormProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [data] = useState(new FormData())
-  const warningDisplay = waringMsn ? true : false
+  const warningDisplay = warningMsg ? true : false
+  const [ColorDisplay, setColorDisplay] = useState('')
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    console.log(data)
     onSubmit(data)
   }
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target
     data.set(name, value)
+    const color = data.get('selectedColor') as string
+    if (color) setColorDisplay(color)
   }
-
-  function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files && e.target.files[0]
-    if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
-      data.set('selectedFile', file)
-    }
-  }
+  useEffect(() => {}, [data])
 
   return (
     <Container warning={warningDisplay}>
       <div className="warning">
-        <p>{waringMsn}</p>
+        <p>{warningMsg}</p>
       </div>
       <FormContainer id="form" onSubmit={handleSubmit} product={newProduct}>
         {formTitle && <p className="formTitle">{formTitle}</p>}
@@ -61,7 +58,6 @@ export const Form: FC<FormProps> = ({
             onChange={handleInputChange}
           />
         </div>
-
         <div>
           <input
             name={input2Title || 'password'}
@@ -78,24 +74,23 @@ export const Form: FC<FormProps> = ({
             />
           </div>
         )}
-
         {signIn && (
           <span className="newRegister">
             <Link to="/SignUp">Novo? Registre-se aqui!</Link>
           </span>
         )}
-
         {newProduct && (
-          <label className="uploadButton">
-            <FiUpload />
+          <div className="newProd">
             <input
-              type="file"
-              accept=".png, .jpg, .jpeg"
-              name="selectedFile"
-              onChange={handleFileChange}
+              id="color_input"
+              type="color"
+              name="selectedColor"
+              onChange={handleInputChange}
             />
-            Imagem Representativa
-          </label>
+            <label htmlFor="color_input">
+              <p>{ColorDisplay ? ColorDisplay : 'Selecione um cor'}</p>
+            </label>
+          </div>
         )}
       </FormContainer>
       <button type="submit" form="form">

@@ -12,6 +12,7 @@ interface Item {
   id: number
   name: string
   price: number
+  color: string
 }
 
 export const ItemRegister: FC<ItemRegisterProps> = () => {
@@ -30,12 +31,14 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
   function handleItemRegister(data: FormData) {
     const nome = data.get('nome') as string
     const preco = data.get('preco') as string
+    const color = data.get('selectedColor') as string
+    const colorWithoutHash = color.substring(1) // Remove the "#" symbol
 
-    console.log(preco)
     api
       .post('/produtos', {
         name: nome,
-        price: preco
+        price: preco,
+        color: colorWithoutHash
       })
       .then(function () {
         toast.success('Item registrado com sucesso', {
@@ -88,8 +91,8 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
             deleteHover
             counter={index < 9 ? index + 1 : null}
             key={item.id}
-            color="0B3B7A"
-            // color={item.color}
+            // color="0B3B7A"
+            color={item.color}
             title={item.name}
             price={item.price}
           />

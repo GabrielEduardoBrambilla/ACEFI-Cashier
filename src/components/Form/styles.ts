@@ -33,7 +33,6 @@ export const FormContainer = styled.form<{ product?: boolean }>`
   }
   > div {
     position: relative;
-    /* height: 4.4rem; */
     width: 100%;
     min-width: 200px;
     > input {
@@ -88,7 +87,52 @@ export const FormContainer = styled.form<{ product?: boolean }>`
       }
     }
   }
+  .newProd {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: end;
+    gap: 10px;
+    border-bottom: 5px solid
+      ${props =>
+        props.product
+          ? props.theme.COLORS.BACKGROUND[100]
+          : props.theme.COLORS.CONTRAST[100]};
+    border-radius: 2px;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: normal;
 
+    &:focus {
+      border-color: ${({ theme }) => theme.COLORS.GREEN};
+      opacity: 0.9;
+      outline: none;
+    }
+    label {
+      p {
+        width: 100%;
+        color: ${({ theme }) => theme.COLORS.BACKGROUND[100]};
+      }
+    }
+    #color_input {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 50px;
+      height: 20px;
+      border-radius: 5px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+    }
+    #color_input::-webkit-color-swatch {
+      border-radius: 5px;
+      border: none;
+    }
+    #color_input::-moz-color-swatch {
+      border-radius: 5px;
+      border: none;
+    }
+  }
   .uploadButton {
     display: flex;
     width: 100%;
@@ -132,6 +176,7 @@ export const Container = styled.div<{ warning?: boolean }>`
     font-weight: bold;
     margin: 4px 0 0 0;
   }
+
   @media (min-width: 1023px) {
     > button {
       align-self: flex-end;
