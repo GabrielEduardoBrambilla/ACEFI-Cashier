@@ -148,6 +148,7 @@ export const SalesPage: FC<SalesPageProps> = () => {
         {response.map((item, index) => (
           <div key={item.id} onClick={() => handleAddItem(item.id)}>
             <Card
+              color="6A1670"
               counter={index < 9 ? index + 1 : null}
               title={item.name}
               price={item.price}

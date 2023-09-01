@@ -25,6 +25,7 @@ export default {
       400: '#750310'
     },
     YELLOW: '#FBA94C',
-    GREEN: '#18AF67'
+    GREEN: '#18AF67',
+    HAPPY_GREEN: '#71d34d'
   }
 }

@@ -3,9 +3,10 @@ import styled, { css } from 'styled-components'
 export const Container = styled.div<{ deleteHover?: boolean }>`
   display: flex;
   flex-direction: column;
-  width: 100px;
-  height: 100px;
-  padding: 15px 10px 10px 10px;
+  width: 120px;
+  height: 120px;
+  gap: 10px;
+  padding: 10px;
   position: relative;
 
   background-color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
@@ -28,16 +29,33 @@ export const Container = styled.div<{ deleteHover?: boolean }>`
   > img {
     width: 100%;
     height: 50%;
-    background-color: transparent;
+    background-color: red;
+    object-fit: fill;
+  }
+  > .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+    font-size: 40px;
+    color: red;
     object-fit: fill;
   }
 
+  .text {
+    overflow: hidden;
+  }
   > p {
     text-transform: capitalize;
   }
   .title {
-    margin: 10px 0 0 0;
     font-weight: bold;
+    height: 18px;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   &:hover {
@@ -46,6 +64,10 @@ export const Container = styled.div<{ deleteHover?: boolean }>`
     &:active {
       opacity: 1;
     }
+  }
+
+  > svg {
+    display: none;
   }
   ${props =>
     props.deleteHover &&

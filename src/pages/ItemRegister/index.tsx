@@ -5,7 +5,7 @@ import { Container } from './styles.js'
 import { api } from '../../services/api.js'
 import { Card } from '../../components/Card/index.js'
 import { Navbar } from '../../components/Navbar/index.js'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 interface ItemRegisterProps {}
 interface Item {
@@ -88,6 +88,7 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
             deleteHover
             counter={index < 9 ? index + 1 : null}
             key={item.id}
+            color="0B3B7A"
             title={item.name}
             price={item.price}
           />
