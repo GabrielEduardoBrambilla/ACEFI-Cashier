@@ -5,7 +5,7 @@ import { Container } from './styles.js'
 import { api } from '../../services/api.js'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-
+import { Modal } from '../../components/Modal/index.js'
 interface SignUpProps {}
 
 export const SignUp: FC<SignUpProps> = () => {
@@ -85,6 +85,9 @@ export const SignUp: FC<SignUpProps> = () => {
           <p> E</p>
         </div>
       </div>
+      <Modal isOpen={true}>
+        <p>Texto em branco</p>
+      </Modal>
       <div className="form-section">
         <Form
           formTitle="Registre-se na plataforma! "
