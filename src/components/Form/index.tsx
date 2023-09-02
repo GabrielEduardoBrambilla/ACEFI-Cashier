@@ -1,6 +1,7 @@
 import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react'
 import { FormContainer, Container } from './styles'
 import { Link } from 'react-router-dom'
+import { Modal } from '../Modal'
 
 interface FormProps {
   onSubmit: (formData: FormData) => void
@@ -32,6 +33,7 @@ export const Form: FC<FormProps> = ({
   const [data] = useState(new FormData())
   const warningDisplay = warningMsg ? true : false
   const [ColorDisplay, setColorDisplay] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -46,8 +48,15 @@ export const Form: FC<FormProps> = ({
   }
   useEffect(() => {}, [data])
 
+  // Function to toggle the isOpen state
+  const toggleModal = () => {
+    setIsOpen(!isOpen)
+  }
   return (
     <Container warning={warningDisplay}>
+      <Modal isOpen={isOpen} onClose={toggleModal}>
+        <p>Texto em branco</p>
+      </Modal>
       <div className="warning">
         <p>{warningMsg}</p>
       </div>
@@ -84,7 +93,9 @@ export const Form: FC<FormProps> = ({
               <Link to="/SignUp">Novo? Registre-se aqui!</Link>
             </span>
             <span className="newRegister">
-              <Link to="/SignUp">Esqueci minha senha '-'</Link>
+              <Link onClick={toggleModal} to="/">
+                Esqueci minha senha '-'
+              </Link>
             </span>
           </p>
         )}
@@ -94,7 +105,9 @@ export const Form: FC<FormProps> = ({
               <Link to="/">Registrado! Faça login aqui!</Link>
             </span>
             <span className="newRegister">
-              <Link to="/SignUp">Verificar email</Link>
+              <Link onClick={toggleModal} to="/SignUp">
+                Re-Verificar email
+              </Link>
             </span>
           </p>
         )}

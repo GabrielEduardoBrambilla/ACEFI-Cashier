@@ -17,6 +17,18 @@ export const Container = styled.div`
     justify-content: center;
     max-height: 100vh;
     overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: ${({ theme }) => theme.COLORS.CONTRAST[200]};
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
   }
   .right-section {
     display: flex;
@@ -36,7 +48,19 @@ export const Container = styled.div`
       max-height: 56vh;
       tbody {
         max-height: 56vh;
-        overflow-y: scroll;
+        overflow-y: auto;
+        &::-webkit-scrollbar {
+          width: 10px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: ${({ theme }) => theme.COLORS.FONT[200]};
+          border-radius: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background-color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
+        }
       }
       th {
         font-weight: bold;

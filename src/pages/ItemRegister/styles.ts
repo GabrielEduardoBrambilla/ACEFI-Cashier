@@ -15,7 +15,19 @@ export const Container = styled.div`
     align-content: flex-start;
     justify-content: center;
     max-height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: ${({ theme }) => theme.COLORS.CONTRAST[200]};
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
   }
   .right-section {
     background-color: ${({ theme }) => theme.COLORS.CONTRAST[100]};

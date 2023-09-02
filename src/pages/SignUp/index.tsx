@@ -85,9 +85,7 @@ export const SignUp: FC<SignUpProps> = () => {
           <p> E</p>
         </div>
       </div>
-      <Modal isOpen={true}>
-        <p>Texto em branco</p>
-      </Modal>
+
       <div className="form-section">
         <Form
           formTitle="Registre-se na plataforma! "
