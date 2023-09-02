@@ -22,7 +22,6 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
       .get('/produtos')
       .then(function (response) {
         setResponse(response.data) // Update items state with fetched data
-        console.log(response.data)
       })
       .catch(function (error) {
         console.error(error)
@@ -32,6 +31,44 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
     const nome = data.get('nome') as string
     const preco = data.get('preco') as string
     const color = data.get('selectedColor') as string
+
+    if (!nome) {
+      toast.error('Nome é obrigatório', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
+      return // Exit the function to prevent further execution
+    }
+
+    if (!preco) {
+      toast.error('Preço é obrigatório', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
+      return // Exit the function to prevent further execution
+    }
+    if (!color) {
+      toast.error('Cor é obrigatória', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
+      return // Exit the function to prevent further execution
+    }
     const colorWithoutHash = color.substring(1) // Remove the "#" symbol
 
     api

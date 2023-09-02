@@ -54,6 +54,18 @@ export const SalesPage: FC<SalesPageProps> = () => {
   }
 
   const handlePagoClick = async () => {
+    if (itemsOrder.length === 0) {
+      toast.warn('Sem itens na comanda', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
+      return
+    }
     const requestJson = itemsOrder.map(item => {
       return {
         item_id: item.id,
@@ -76,7 +88,15 @@ export const SalesPage: FC<SalesPageProps> = () => {
         theme: 'light'
       })
     } catch (error) {
-      console.error('Error making payment:', error)
+      toast.error(`Error: ${error}`, {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
     }
     if (receivedAmountRef.current) {
       receivedAmountRef.current.blur()

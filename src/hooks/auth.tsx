@@ -6,6 +6,7 @@ import {
   ReactNode
 } from 'react'
 import { api } from '../services/api'
+import { toast } from 'react-toastify'
 
 interface User {
   id: number
@@ -54,9 +55,25 @@ function AuthProvider({ children }: AuthProviderProps) {
       })
     } catch (error: any) {
       if (error.response) {
-        alert(error)
+        toast.error('Senha ou e-mail incorreto', {
+          position: 'bottom-left',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light'
+        })
       } else {
-        alert('Not possible to login')
+        toast.warn('Not possible to login', {
+          position: 'bottom-left',
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light'
+        })
       }
     }
   }

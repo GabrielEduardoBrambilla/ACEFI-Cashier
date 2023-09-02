@@ -3,6 +3,7 @@ import { FC } from 'react'
 import logo from '../../assets/HOPIC_SHARP.png'
 import { Container } from './styles'
 import { useAuth } from '../../hooks/auth.js'
+import { toast } from 'react-toastify'
 
 interface SignInProps {}
 
@@ -11,9 +12,31 @@ export const SignIn: FC<SignInProps> = () => {
   function handleSignIn(data: FormData) {
     const email = data.get('email') as string
     const password = data.get('password') as string
-    console.log(email)
-    console.log(password)
-    signIn({ email, password })
+    if (!email || !password) {
+      toast.error('Preencha todos os campos', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
+      return
+    }
+    try {
+      signIn({ email, password })
+    } catch (error) {
+      toast.warn('Senha ou e-mail incorreto', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
+    }
   }
 
   return (

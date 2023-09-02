@@ -17,7 +17,28 @@ export const SignUp: FC<SignUpProps> = () => {
     const password = data.get('password') as string
 
     if (!name || !email || !password) {
-      return alert('Preencha todos os campos!')
+      toast.error('Preencha todos os campos', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
+      return
+    }
+    if (password.length < 6) {
+      toast.warn('A senha deve possuir 6 caracteres ou mais', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
+      return
     }
     api
       .post('/signup', {
@@ -38,8 +59,9 @@ export const SignUp: FC<SignUpProps> = () => {
         navigate('/')
       })
       .catch(function (error) {
-        console.log(error)
-        toast.error(`Ocorreu um erro: ${error.request.response}`, {
+        const response = JSON.parse(error.request.response)
+        const errorMessage = response.errors.default
+        toast.error(`Ocorreu um erro: ${errorMessage}`, {
           position: 'bottom-left',
           autoClose: 3000,
           hideProgressBar: false,
