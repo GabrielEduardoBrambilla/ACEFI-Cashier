@@ -3,8 +3,8 @@ import styled, { css } from 'styled-components'
 export const Container = styled.div<{ deleteHover?: boolean }>`
   display: flex;
   flex-direction: column;
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   gap: 10px;
   padding: 10px;
   position: relative;
@@ -12,7 +12,7 @@ export const Container = styled.div<{ deleteHover?: boolean }>`
   background-color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
   color: ${({ theme }) => theme.COLORS.FONT[100]};
 
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
 
   border-radius: 9px;
