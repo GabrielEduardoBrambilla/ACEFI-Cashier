@@ -5,7 +5,7 @@ import { Container } from './styles.js'
 import { api } from '../../services/api.js'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { Modal } from '../../components/Modal/index.js'
+// import { Modal } from '../../components/Modal/'
 interface SignUpProps {}
 
 export const SignUp: FC<SignUpProps> = () => {
