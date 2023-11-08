@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Container } from './styles'
-import { MdDeleteForever } from 'react-icons/md'
+import { BiSolidEditAlt } from 'react-icons/bi'
 import { FaClone } from 'react-icons/fa'
 import { useTheme } from 'styled-components'
 // FaDiceD6
@@ -31,7 +31,7 @@ export const Card: FC<CardProps> = ({
       <div className="icon">
         <FaClone style={{ color: `#${color}` || theme.COLORS.HAPPY_GREEN }} />
       </div>
-      <MdDeleteForever />
+      <BiSolidEditAlt />
       <div className="text">
         <p className="title">{title}</p>
         <p className="price">R$ {formattedPrice}</p>

@@ -1,17 +1,44 @@
+import React, { ReactNode, useEffect, useRef, KeyboardEvent } from 'react'
 import { CloseButton, ModalContainer, ModalOverlay } from './styles'
-import React, { ReactNode } from 'react'
 
 interface ModalProps {
   isOpen: boolean
   onClose: () => void
   children: ReactNode
 }
+
 export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+  const modalRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose()
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown)
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen, onClose])
+
+  const handleClickOutside = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    if (event.target === modalRef.current) {
+      onClose()
+    }
+  }
+
   if (!isOpen) return null
 
   return (
-    <ModalOverlay onClick={onClose}>
-      <ModalContainer>
+    <ModalOverlay onClick={handleClickOutside}>
+      <ModalContainer ref={modalRef}>
         <CloseButton onClick={onClose}>&times;</CloseButton>
         {children}
       </ModalContainer>

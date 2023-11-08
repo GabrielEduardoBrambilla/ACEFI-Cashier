@@ -6,10 +6,9 @@ import { api } from '../../services/api.js'
 import { Card } from '../../components/Card/index.js'
 import { Navbar } from '../../components/Navbar/index.js'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
-import { Modal } from '../../components/Modal/index.js'
+import { useNavigate, useParams } from 'react-router-dom'
 
-interface ItemRegisterProps {}
+interface ItemEditor {}
 interface Item {
   id: number
   name: string
@@ -17,11 +16,16 @@ interface Item {
   color: string
 }
 
-export const ItemRegister: FC<ItemRegisterProps> = () => {
+export const ItemEditor: FC<ItemEditor> = () => {
   const [response, setResponse] = useState<Item[]>([])
   const navigate = useNavigate()
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
+  const { id } = useParams() // Extracts the 'id' parameter from the URL
+  console.log(id)
+  console.log(id)
+  console.log(id)
+  console.log(id)
+  console.log(id)
+  console.log(id)
   const fetchItems = () => {
     api
       .get('/produtos')
@@ -32,7 +36,6 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
         console.error(error)
       })
   }
-  function handleItemUpdate(data: FormData) {}
   function handleItemRegister(data: FormData) {
     const nome = data.get('nome') as string
     const preco = data.get('preco') as string
@@ -100,28 +103,38 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
       })
   }
 
+  function handleItemDeletion(item: any) {
+    const id = item.id
+    api
+      .delete(`/produtos/${id}`, {})
+      .then(function () {
+        toast.warning('Item deletado com sucesso', {
+          position: 'bottom-left',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light'
+        })
+        fetchItems()
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+  }
+
   useEffect(() => {
     fetchItems()
   }, [])
-  const openModal = () => {
-    setIsModalOpen(true)
-  }
-
-  const closeModal = () => {
-    setIsModalOpen(false)
-  }
 
   return (
     <Container>
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <div></div>
-      </Modal>
       <div className="items-wrapper">
         {response.map((item, index) => (
           <Card
             onClick={() => {
-              setIsModalOpen(true)
-              // navigate(`/edititem/${item.id}`)
+              navigate('/loja')
             }}
             deleteHover
             counter={index < 9 ? index + 1 : null}
