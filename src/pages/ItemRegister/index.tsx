@@ -8,6 +8,7 @@ import { Navbar } from '../../components/Navbar/index.js'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { Modal } from '../../components/Modal/index.js'
+import { EditForm } from '../../components/EditForm/index.js'
 
 interface ItemRegisterProps {}
 interface Item {
@@ -19,6 +20,7 @@ interface Item {
 
 export const ItemRegister: FC<ItemRegisterProps> = () => {
   const [response, setResponse] = useState<Item[]>([])
+  const [editItem, setEditItem] = useState<Item>()
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -32,7 +34,72 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
         console.error(error)
       })
   }
-  function handleItemUpdate(data: FormData) {}
+  function handleItemUpdate(data: FormData) {
+    const nome = data.get('name') as string
+    const preco = data.get('price') as string
+    const color = data.get('selectedColor') as string
+
+    if (!nome) {
+      toast.error('Nome é obrigatório', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
+      return // Exit the function to prevent further execution
+    }
+
+    if (!preco) {
+      toast.error('Preço é obrigatório', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
+      return // Exit the function to prevent further execution
+    }
+    if (!color) {
+      toast.error('Cor é obrigatória', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
+      return // Exit the function to prevent further execution
+    }
+    const colorWithoutHash = color.substring(1) // Remove the "#" symbol
+
+    api
+      .put(`/produtos/${editItem?.id}`, {
+        name: nome,
+        price: preco,
+        color: colorWithoutHash
+      })
+      .then(function () {
+        toast.success('Item atualizdo com sucesso', {
+          position: 'bottom-left',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light'
+        })
+        fetchItems()
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+  }
   function handleItemRegister(data: FormData) {
     const nome = data.get('nome') as string
     const preco = data.get('preco') as string
@@ -113,13 +180,24 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
 
   return (
     <Container>
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <div></div>
-      </Modal>
+      {editItem && (
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <EditForm
+            newProduct
+            onSubmit={handleItemUpdate}
+            formTitle={`Editando ${editItem.name}`}
+            name={editItem.name}
+            price={editItem.price}
+            color={`#${editItem.color}`}
+            ActionButton="Atualizar item"
+          />
+        </Modal>
+      )}
       <div className="items-wrapper">
         {response.map((item, index) => (
           <Card
             onClick={() => {
+              setEditItem(item)
               setIsModalOpen(true)
               // navigate(`/edititem/${item.id}`)
             }}
