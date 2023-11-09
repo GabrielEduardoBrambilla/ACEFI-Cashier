@@ -140,6 +140,7 @@ export const FormContainer = styled.form<{ product?: boolean }>`
       border: none;
     }
   }
+
   .uploadButton {
     display: flex;
     width: 100%;
@@ -198,29 +199,24 @@ export const Container = styled.div<{ warning?: boolean }>`
       font-weight: bold;
     }
   }
+  .modal-text {
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
+    color: ${({ theme }) => theme.COLORS.FONT[200]};
+  }
+  .modal-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 50px;
+    cursor: pointer;
+    color: ${({ theme }) => theme.COLORS.GREEN};
+    & > :last-child {
+      color: ${({ theme }) => theme.COLORS.RED[100]};
+    }
+  }
 
   @media (min-width: 1023px) {
-  }
-  .warning {
-    /* background-; */
-    display: ${props => (props.warning ? 'unset' : 'hidden')};
-    background-color: ${props => (props.warning ? 'green' : null)};
-
-    opacity: 0.9;
-    margin: 5px 0;
-    padding: 5px;
-    text-align: center;
-    border-radius: 90px;
-
-    > p {
-      color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
-      font-family: Inter;
-
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: normal;
-    }
   }
   @media (min-width: 1023px) {
     width: 90%;

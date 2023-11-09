@@ -1,12 +1,16 @@
 import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react'
 import { FormContainer, Container } from './styles'
-import { IoTrashBin } from 'react-icons/io5'
+import {
+  IoCheckmarkCircleSharp,
+  IoReturnUpBack,
+  IoTrashBin
+} from 'react-icons/io5'
 // import { Link } from 'react-router-dom'
 import { Modal } from '../Modal'
-import { floated } from '@material-tailwind/react/types/components/card'
 
 interface EditFormProps {
   onSubmit: (formData: FormData) => void
+  handleItemDeletion: (item: any) => void
   newProduct?: boolean
   formTitle?: string
   ActionButton: string
@@ -20,6 +24,7 @@ export const EditForm: FC<EditFormProps> = ({
   formTitle,
   ActionButton,
   onSubmit,
+  handleItemDeletion,
   name,
   color,
   price
@@ -67,7 +72,11 @@ export const EditForm: FC<EditFormProps> = ({
   return (
     <Container>
       <Modal isOpen={isOpen} onClose={toggleModal}>
-        <p>Texto em branco</p>
+        <p className="modal-text">Deseja mesmo excluir esse item?</p>
+        <div className="modal-buttons">
+          <IoReturnUpBack onClick={toggleModal} />
+          <IoTrashBin onClick={handleItemDeletion} className="icon" />
+        </div>
       </Modal>
 
       <FormContainer id="form" onSubmit={handleSubmit} product={newProduct}>
@@ -105,7 +114,7 @@ export const EditForm: FC<EditFormProps> = ({
         </div>
       </FormContainer>
       <div className="buttons">
-        <IoTrashBin className="icon" />
+        <IoTrashBin onClick={toggleModal} className="icon" />
         <button type="submit" form="form">
           {ActionButton}
         </button>

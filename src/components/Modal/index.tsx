@@ -26,6 +26,14 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
     }
   }, [isOpen, onClose])
 
+  // const handleClickOutside = (
+  //   event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  // ) => {
+  //   if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+  //     onClose()
+  //   }
+  // }
+
   const handleClickOutside = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
@@ -37,8 +45,8 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null
 
   return (
-    <ModalOverlay onClick={handleClickOutside}>
-      <ModalContainer ref={modalRef}>
+    <ModalOverlay ref={modalRef} onClick={handleClickOutside}>
+      <ModalContainer>
         <CloseButton onClick={onClose}>&times;</CloseButton>
         {children}
       </ModalContainer>

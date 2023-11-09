@@ -166,24 +166,43 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
         console.error(error)
       })
   }
-
+  function handleItemDeletion(item: any) {
+    const id = item.id
+    api
+      .delete(`/produtos/${id}`, {})
+      .then(function () {
+        toast.warning('Item deletado com sucesso', {
+          position: 'bottom-left',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light'
+        })
+        fetchItems()
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+  }
   useEffect(() => {
     fetchItems()
   }, [])
-  const openModal = () => {
-    setIsModalOpen(true)
-  }
 
-  const closeModal = () => {
-    setIsModalOpen(false)
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen)
   }
-
   return (
     <Container>
       {editItem && (
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <Modal isOpen={isModalOpen} onClose={toggleModal}>
           <EditForm
             newProduct
+            handleItemDeletion={() => {
+              handleItemDeletion(editItem)
+              toggleModal()
+            }}
             onSubmit={handleItemUpdate}
             formTitle={`Editando ${editItem.name}`}
             name={editItem.name}

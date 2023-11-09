@@ -103,27 +103,6 @@ export const ItemEditor: FC<ItemEditor> = () => {
       })
   }
 
-  function handleItemDeletion(item: any) {
-    const id = item.id
-    api
-      .delete(`/produtos/${id}`, {})
-      .then(function () {
-        toast.warning('Item deletado com sucesso', {
-          position: 'bottom-left',
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: 'light'
-        })
-        fetchItems()
-      })
-      .catch(function (error) {
-        console.error(error)
-      })
-  }
-
   useEffect(() => {
     fetchItems()
   }, [])
