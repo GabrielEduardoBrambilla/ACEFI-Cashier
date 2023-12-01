@@ -6,6 +6,7 @@ import { api } from '../../services/api.js'
 import { Card } from '../../components/Card/index.js'
 import { Navbar } from '../../components/Navbar/index.js'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 import { Modal } from '../../components/Modal/index.js'
 import { EditForm } from '../../components/EditForm/index.js'
 
@@ -20,6 +21,7 @@ interface Item {
 export const ItemRegister: FC<ItemRegisterProps> = () => {
   const [response, setResponse] = useState<Item[]>([])
   const [editItem, setEditItem] = useState<Item>()
+  const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const fetchItems = () => {
