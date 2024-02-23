@@ -76,16 +76,18 @@ export const Container = styled.div<{ deleteHover?: boolean }>`
         > svg {
           display: flex;
           position: absolute;
+          z-index: 5;
           align-items: center;
           justify-content: center;
-          top: 25%;
-          left: 25%;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
           font-size: 45px;
           border-radius: 50px;
         }
-        background-color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
+        background-color: ${({ theme }) => theme.COLORS.CONTRAST[200]};
         &:active {
-          background-color: ${({ theme }) => theme.COLORS.RED[100]};
+          background-color: ${({ theme }) => theme.COLORS.GREEN};
         }
       }
     `}
