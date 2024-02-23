@@ -1,10 +1,13 @@
-import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react'
-import { FormContainer, Container } from './styles'
 import {
-  IoCheckmarkCircleSharp,
-  IoReturnUpBack,
-  IoTrashBin
-} from 'react-icons/io5'
+  FC,
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  SetStateAction
+} from 'react'
+import { FormContainer, Container } from './styles'
+import { IoReturnUpBack, IoTrashBin } from 'react-icons/io5'
 // import { Link } from 'react-router-dom'
 import { Modal } from '../Modal'
 
@@ -99,7 +102,6 @@ export const EditForm: FC<EditFormProps> = ({
             onChange={handleInputChange}
           />
         </div>
-
         <div className="newProd">
           <input
             id="color_input"
@@ -112,9 +114,21 @@ export const EditForm: FC<EditFormProps> = ({
             <p>{ColorDisplay ? ColorDisplay : 'Selecione um cor'}</p>
           </label>
         </div>
+        <div>
+          <input
+            name="shortCut"
+            type="number"
+            value={'ShortCut'}
+            placeholder="ShortCut"
+            onChange={handleInputChange}
+          />
+        </div>
       </FormContainer>
       <div className="buttons">
-        <IoTrashBin onClick={toggleModal} className="icon" />
+        <div className="actionsBtns">
+          <IoReturnUpBack onClick={toggleModal} className="icon" />
+          <IoTrashBin onClick={toggleModal} className="icon" />
+        </div>
         <button type="submit" form="form">
           {ActionButton}
         </button>

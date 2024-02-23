@@ -27,7 +27,6 @@ export const Card: FC<CardProps> = ({
   return (
     <Container deleteHover={deleteHover} onClick={onClick}>
       <span className="counter">{counter}</span>
-      {/* <img src={image} alt={image || 'imagem descritiva do item'} /> */}
       <div className="icon">
         <FaClone style={{ color: `#${color}` || theme.COLORS.HAPPY_GREEN }} />
       </div>

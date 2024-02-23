@@ -173,13 +173,21 @@ export const Container = styled.div<{ warning?: boolean }>`
   height: 100%;
   width: 90%;
   max-width: 420px;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 24px;
 
+  .actionsBtns {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    width: 80%;
+  }
   .buttons {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
 
+    gap: 16px;
     .icon {
       color: ${({ theme }) => theme.COLORS.FONT[100]};
       font-size: 35px;
@@ -189,8 +197,7 @@ export const Container = styled.div<{ warning?: boolean }>`
       }
     }
     button {
-      flex-grow: 1; /* Occupy 2/3 of the width */
-      flex-basis: 50%; /* 2/3 of the width */
+      flex-basis: 50%;
       height: 42px;
       background-color: ${({ theme }) => theme.COLORS.BUTTON[100]};
       font-size: 16px;

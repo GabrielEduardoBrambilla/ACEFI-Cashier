@@ -7,7 +7,6 @@ import { Card } from '../../components/Card/index.js'
 import { Navbar } from '../../components/Navbar/index.js'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-import { Modal } from '../../components/Modal/index.js'
 import { EditForm } from '../../components/EditForm/index.js'
 
 interface ItemRegisterProps {}
@@ -195,23 +194,6 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
   }
   return (
     <Container>
-      {editItem && (
-        <Modal isOpen={isModalOpen} onClose={toggleModal}>
-          <EditForm
-            newProduct
-            handleItemDeletion={() => {
-              handleItemDeletion(editItem)
-              toggleModal()
-            }}
-            onSubmit={handleItemUpdate}
-            formTitle={`Editando ${editItem.name}`}
-            name={editItem.name}
-            price={editItem.price}
-            color={`#${editItem.color}`}
-            ActionButton="Atualizar item"
-          />
-        </Modal>
-      )}
       <div className="items-wrapper">
         {response.map((item, index) => (
           <Card
@@ -234,16 +216,32 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
         <Navbar />
 
         <div className="form-wrapper">
-          <Form
-            onSubmit={handleItemRegister}
-            newProduct
-            input1Title="nome"
-            input1Type="text"
-            input2Title="preco"
-            input2Type="number"
-            formTitle="Registrar um novo Item"
-            ActionButton="Registrar item"
-          />
+          {editItem ? (
+            <EditForm
+              newProduct
+              handleItemDeletion={() => {
+                handleItemDeletion(editItem)
+                toggleModal()
+              }}
+              onSubmit={handleItemUpdate}
+              formTitle={`Editando ${editItem.name}`}
+              name={editItem.name}
+              price={editItem.price}
+              color={`#${editItem.color}`}
+              ActionButton="Atualizar item"
+            />
+          ) : (
+            <Form
+              onSubmit={handleItemRegister}
+              newProduct
+              input1Title="nome"
+              input1Type="text"
+              input2Title="preco"
+              input2Type="number"
+              formTitle="Registrar um novo Item"
+              ActionButton="Registrar item"
+            />
+          )}
         </div>
       </div>
     </Container>
