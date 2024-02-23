@@ -1,25 +1,22 @@
-import {
-  FC,
-  useState,
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  SetStateAction
-} from 'react'
+import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react'
 import { FormContainer, Container } from './styles'
 import { IoReturnUpBack, IoTrashBin } from 'react-icons/io5'
 // import { Link } from 'react-router-dom'
 import { Modal } from '../Modal'
-
+interface Item {
+  id: number
+  name: string
+  price: number
+  color: string
+}
 interface EditFormProps {
   onSubmit: (formData: FormData) => void
   handleItemDeletion: (item: any) => void
   newProduct?: boolean
   formTitle?: string
   ActionButton: string
-  name: string
-  price: number
-  color: string
+  item: Item
+  setEditItem: React.Dispatch<React.SetStateAction<Item | undefined>>
 }
 
 export const EditForm: FC<EditFormProps> = ({
@@ -28,14 +25,13 @@ export const EditForm: FC<EditFormProps> = ({
   ActionButton,
   onSubmit,
   handleItemDeletion,
-  name,
-  color,
-  price
+  item,
+  setEditItem
 }: EditFormProps) => {
   const [data] = useState(new FormData())
-  const [ColorDisplay, setColorDisplay] = useState(color)
-  const [nameState, setName] = useState(name)
-  const [priceState, setPrice] = useState(price)
+  const [colorState, setColorState] = useState(String)
+  const [nameState, setName] = useState(String)
+  const [priceState, setPrice] = useState(Number)
   const [isOpen, setIsOpen] = useState(false)
 
   function handleSubmit(e: FormEvent) {
@@ -55,23 +51,32 @@ export const EditForm: FC<EditFormProps> = ({
         setPrice(price)
         break
       case 'selectedColor':
-        setColorDisplay(value)
+        setColorState(value)
         break
     }
     data.set(name, value)
     const color = data.get('selectedColor') as string
-    if (color) setColorDisplay(color)
+    if (color) setColorState(color)
   }
+  console.log(item)
+  console.log(item)
   useEffect(() => {
     data.set('name', nameState)
     data.set('price', priceState.toString())
-    data.set('selectedColor', ColorDisplay)
+    data.set('selectedColor', colorState)
+    setColorState(item.color)
+    setName(item.name)
+    setPrice(item.price)
   }, [])
 
   // Function to toggle the isOpen state
   const toggleModal = () => {
     setIsOpen(!isOpen)
   }
+  const toggleForm = () => {
+    setEditItem(undefined)
+  }
+
   return (
     <Container>
       <Modal isOpen={isOpen} onClose={toggleModal}>
@@ -107,11 +112,11 @@ export const EditForm: FC<EditFormProps> = ({
             id="color_input"
             type="color"
             name="selectedColor"
-            value={ColorDisplay}
+            value={`#${colorState}`}
             onChange={handleInputChange}
           />
           <label htmlFor="color_input">
-            <p>{ColorDisplay ? ColorDisplay : 'Selecione um cor'}</p>
+            <p>{colorState ? colorState : 'Selecione um cor'}</p>
           </label>
         </div>
         <div>
@@ -126,7 +131,7 @@ export const EditForm: FC<EditFormProps> = ({
       </FormContainer>
       <div className="buttons">
         <div className="actionsBtns">
-          <IoReturnUpBack onClick={toggleModal} className="icon" />
+          <IoReturnUpBack onClick={toggleForm} className="icon" />
           <IoTrashBin onClick={toggleModal} className="icon" />
         </div>
         <button type="submit" form="form">

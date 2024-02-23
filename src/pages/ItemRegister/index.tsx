@@ -199,13 +199,10 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
           <Card
             onClick={() => {
               setEditItem(item)
-              setIsModalOpen(true)
-              // navigate(`/edititem/${item.id}`)
             }}
             deleteHover
             counter={index < 9 ? index + 1 : null}
             key={item.id}
-            // color="0B3B7A"
             color={item.color}
             title={item.name}
             price={item.price}
@@ -216,19 +213,18 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
         <Navbar />
 
         <div className="form-wrapper">
-          {editItem ? (
+          {editItem !== undefined ? (
             <EditForm
+              key={editItem.id}
               newProduct
               handleItemDeletion={() => {
                 handleItemDeletion(editItem)
-                toggleModal()
               }}
               onSubmit={handleItemUpdate}
               formTitle={`Editando ${editItem.name}`}
-              name={editItem.name}
-              price={editItem.price}
-              color={`#${editItem.color}`}
+              item={editItem}
               ActionButton="Atualizar item"
+              setEditItem={setEditItem}
             />
           ) : (
             <Form

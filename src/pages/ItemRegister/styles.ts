@@ -33,7 +33,7 @@ export const Container = styled.div`
     background-color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
     padding: 10px;
     height: 100vh;
-    justify-content: space-between;
+    justify-content: center;
 
     .form-wrapper {
       display: flex;
