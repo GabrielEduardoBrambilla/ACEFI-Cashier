@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components'
 export default createGlobalStyle`
 html:root{
    /* Set base font size to 62.5% (10px) of the default 16px */
-   font-size: 62.5%;
+   /* font-size: 62.5%; */
 }
 
   @font-face {

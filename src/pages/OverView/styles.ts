@@ -9,11 +9,10 @@ export const Container = styled.div`
     grid-area: 'items-wrapper';
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 16px;
     margin: 15px 0;
     padding: 0 15px;
     align-content: flex-start;
-    justify-content: center;
     max-height: 100vh;
     overflow-y: auto;
     &::-webkit-scrollbar {
@@ -42,7 +41,14 @@ export const Container = styled.div`
       justify-content: center;
     }
   }
-  .data-grid {
-    font-size: 54px;
+  .MuiTablePagination-root,
+  .MuiSvgIcon-root {
+    color: #fff !important;
+  }
+  .table-title {
+    font-size: 18px;
+    font-weight: 500;
+    text-align: left;
+    justify-self: start;
   }
 `

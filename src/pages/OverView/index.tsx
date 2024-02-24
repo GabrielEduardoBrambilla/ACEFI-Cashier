@@ -4,49 +4,15 @@ import { api } from '../../services/api.js'
 import { Navbar } from '../../components/Navbar/index.js'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-import { styled } from '@mui/material/styles'
-import TableCell, { tableCellClasses } from '@mui/material/TableCell'
-import TableRow from '@mui/material/TableRow'
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
+import { v4 as uuidv4 } from 'uuid'
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    fontSize: 16,
-    color: theme.palette.common.white
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14
-  }
-}))
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0
-  }
-}))
-
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein }
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9)
-]
+import {
+  DataGrid,
+  GridColDef,
+  GridToolbar,
+  GridToolbarContainer,
+  GridToolbarExport
+} from '@mui/x-data-grid'
 
 interface OverViewProps {}
 interface Item {
@@ -56,94 +22,101 @@ interface Item {
   color: string
 }
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'name', headerName: 'Item', width: 130 },
-  { field: 'price', headerName: 'Preço Unid.', type: 'number', width: 130 },
-  { field: 'color', headerName: 'Qtd. vendida', type: 'number', width: 130 },
+  { field: 'id', headerName: 'ID', flex: 1 },
+  { field: 'name', headerName: 'Item', flex: 1 },
+  {
+    field: 'item_price_at_time',
+    headerName: 'Preço Unid.',
+    type: 'number',
+    flex: 1
+  },
+  { field: 'quantity', headerName: 'Qtd. vendida', type: 'number', flex: 1 },
   {
     field: 'totalValue',
     headerName: 'Total vendido',
     type: 'number',
-    width: 130
+    flex: 1
+  }
+]
+
+const orderColumns: GridColDef[] = [
+  { field: 'order_id', headerName: 'ID Order', flex: 1 },
+  {
+    field: 'created_at',
+    headerName: 'Data criação',
+    type: 'Date',
+    flex: 1
+  },
+  { field: 'item_price_at_time', headerName: 'Preço', type: 'number', flex: 1 },
+  {
+    field: 'quantity',
+    headerName: 'Qtd. Item',
+    type: 'number',
+    flex: 1
+  },
+  {
+    field: 'total_price',
+    headerName: 'Total Ordem',
+    type: 'number',
+    flex: 1
   }
 ]
 export const OverView: FC<OverViewProps> = () => {
   const [response, setResponse] = useState<Item[]>([])
-  const [editItem, setEditItem] = useState<Item>()
+  const [order, setOrder] = useState<Item[]>([])
   const navigate = useNavigate()
-  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const fetchItems = () => {
     api
-      .get('/produtos')
+      .get('/getItemSalesXLSX')
       .then(function (response) {
-        setResponse(response.data) // Update items state with fetched data
+        const modifiedResponse = response.data.map(
+          (item: { quantity: number; item_price_at_time: number }) => ({
+            ...item,
+            totalValue: item.quantity * item.item_price_at_time
+          })
+        )
+        setResponse(modifiedResponse) // Update items state with fetched data
       })
       .catch(function (error) {
         console.error(error)
       })
   }
-  function handleItemUpdate(data: FormData) {
-    const nome = data.get('name') as string
-    const preco = data.get('price') as string
-    const color = data.get('selectedColor') as string
-
-    if (!nome) {
-      toast.error('Nome é obrigatório', {
-        position: 'bottom-left',
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: 'light'
-      })
-      return // Exit the function to prevent further execution
-    }
-
-    if (!preco) {
-      toast.error('Preço é obrigatório', {
-        position: 'bottom-left',
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: 'light'
-      })
-      return // Exit the function to prevent further execution
-    }
-    if (!color) {
-      toast.error('Cor é obrigatória', {
-        position: 'bottom-left',
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: 'light'
-      })
-      return // Exit the function to prevent further execution
-    }
-    const colorWithoutHash = color.substring(1) // Remove the "#" symbol
-
+  const fetchOrder = () => {
     api
-      .put(`/produtos/${editItem?.id}`, {
-        name: nome,
-        price: preco,
-        color: colorWithoutHash
-      })
-      .then(function () {
-        toast.success('Item atualizdo com sucesso', {
-          position: 'bottom-left',
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: 'light'
-        })
-        fetchItems()
+      .get('/getOrderSalesXLSX')
+      .then(function (response) {
+        const flattenedResponse = response.data.flatMap(
+          (order: {
+            order_items: {
+              item_name: any
+              item_price_at_time: any
+              quantity: any
+            }[]
+            created_at: any
+            order_id: any
+            total_price: any
+          }) =>
+            order.order_items.map(
+              (item: {
+                item_name: any
+                item_price_at_time: any
+                quantity: any
+              }) => ({
+                id: uuidv4(), // Generating unique ID for each row
+                created_at: new Date(order.created_at).toLocaleDateString(
+                  'en-GB'
+                ), // Formatting created_at date as DD-MM-YYYY
+                order_id: order.order_id,
+                item_name: item.item_name,
+                item_price_at_time: item.item_price_at_time,
+                quantity: item.quantity,
+                total_price: order.total_price
+              })
+            )
+        )
+        console.log(flattenedResponse)
+        setOrder(flattenedResponse)
       })
       .catch(function (error) {
         console.error(error)
@@ -237,26 +210,64 @@ export const OverView: FC<OverViewProps> = () => {
   }
   useEffect(() => {
     fetchItems()
+    fetchOrder()
   }, [])
 
+  function CustomTollBar(Title: String) {
+    return (
+      <GridToolbarContainer>
+        <p className="table-title">{Title}</p>
+        <GridToolbarExport />
+      </GridToolbarContainer>
+    )
+  }
   return (
     <Container>
       <div className="items-wrapper">
-        <p>Vendas por item</p>
-
+        <div
+          style={{
+            height: 350,
+            width: '100%',
+            maxHeight: 'max-content',
+            color: '#FFF',
+            borderRadius: 9
+          }}
+        >
+          <DataGrid
+            sx={{ fontSize: 14, color: '#FFF' }}
+            rows={response}
+            slots={{
+              toolbar: () => {
+                return CustomTollBar('Vendas por itens')
+              }
+            }}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 }
+              }
+            }}
+            pageSizeOptions={[5, 10]}
+          />
+        </div>
         <div
           style={{
             height: 400,
             width: '100%',
+            maxHeight: '50%',
             color: '#FFF',
-            borderRadius: 9,
-            fontSize: '16px'
+            borderRadius: 9
           }}
         >
           <DataGrid
-            sx={{ fontSize: 16, color: '#FFF' }}
-            rows={response}
-            columns={columns}
+            sx={{ fontSize: 14, color: '#FFF' }}
+            rows={order}
+            slots={{
+              toolbar: () => {
+                return CustomTollBar('Vendas Totais')
+              }
+            }}
+            columns={orderColumns}
             initialState={{
               pagination: {
                 paginationModel: { page: 0, pageSize: 10 }
