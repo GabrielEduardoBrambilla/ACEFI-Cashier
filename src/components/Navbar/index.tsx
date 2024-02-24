@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { Container } from './styles'
-import { RiFileExcel2Fill } from 'react-icons/ri'
 import { FaStore } from 'react-icons/fa'
 import { RiLogoutCircleRLine } from 'react-icons/ri'
 import { ImHome3 } from 'react-icons/im'
@@ -8,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { api } from '../../services/api'
 import { toast } from 'react-toastify'
 import { useAuth } from '../../hooks/auth.js'
+import { DiDatabase } from 'react-icons/di'
 
 interface NavbarProps {
   store?: boolean
@@ -58,8 +58,12 @@ export const Navbar: FC<NavbarProps> = ({ store }: NavbarProps) => {
 
   return (
     <Container>
-      <div onClick={fetchXLSX}>
-        <RiFileExcel2Fill title="Exportar relatório Excel" />
+      <div
+        onClick={() => {
+          navigate('/relatorio')
+        }}
+      >
+        <DiDatabase title="Exportar relatório Excel" />
       </div>
       {!store && (
         <Link to="/loja" title="Ir para loja" className="store-btn">
