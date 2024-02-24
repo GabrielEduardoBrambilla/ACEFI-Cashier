@@ -22,7 +22,7 @@ interface Item {
   color: string
 }
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', flex: 1 },
+  { field: 'item_id', headerName: 'ID', flex: 1 },
   { field: 'name', headerName: 'Item', flex: 1 },
   {
     field: 'item_price_at_time',
@@ -71,8 +71,14 @@ export const OverView: FC<OverViewProps> = () => {
       .get('/getItemSalesXLSX')
       .then(function (response) {
         const modifiedResponse = response.data.map(
-          (item: { quantity: number; item_price_at_time: number }) => ({
+          (item: {
+            quantity: number
+            item_price_at_time: number
+            id: number
+          }) => ({
             ...item,
+            id: uuidv4(), // Generating unique ID for each row
+            item_id: item.id,
             totalValue: item.quantity * item.item_price_at_time
           })
         )
