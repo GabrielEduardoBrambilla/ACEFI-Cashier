@@ -11,8 +11,9 @@ export const Container = styled.div`
     flex-wrap: wrap;
     gap: 16px;
     margin: 15px 0;
-    padding: 0 15px;
-    align-content: flex-start;
+    padding: 0 16px 16px 15px;
+    align-content: space-between;
+    justify-content: center;
     max-height: 100vh;
     overflow-y: auto;
     &::-webkit-scrollbar {
@@ -46,9 +47,16 @@ export const Container = styled.div`
     color: #fff !important;
   }
   .table-title {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
     font-size: 18px;
     font-weight: 500;
     text-align: left;
     justify-self: start;
+    margin: 16px 0;
+    svg {
+      cursor: pointer;
+    }
   }
 `

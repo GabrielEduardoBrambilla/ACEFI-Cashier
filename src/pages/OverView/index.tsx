@@ -13,6 +13,7 @@ import {
   GridToolbarContainer,
   GridToolbarExport
 } from '@mui/x-data-grid'
+import { FaDownload, FaStore } from 'react-icons/fa'
 
 interface OverViewProps {}
 interface Item {
@@ -41,6 +42,7 @@ const columns: GridColDef[] = [
 
 const orderColumns: GridColDef[] = [
   { field: 'order_id', headerName: 'ID Order', flex: 1 },
+  { field: 'item_name', headerName: 'Item', flex: 1 },
   {
     field: 'created_at',
     headerName: 'Data criação',
@@ -214,19 +216,50 @@ export const OverView: FC<OverViewProps> = () => {
         console.error(error)
       })
   }
+
+  const fetchXLSX = async (items: boolean) => {
+    try {
+      toast.info('Iniciando download, aguarde um momento', {
+        position: 'bottom-left',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
+
+      const response = items
+        ? await api.get('/getXLSX/ITEMS_SALES', { responseType: 'blob' })
+        : await api.get('/getXLSX/ALL_SALES', { responseType: 'blob' })
+
+      // Create a Blob from the response data
+      const blob = new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      })
+
+      // Create a blob URL for the Blob
+      const url = URL.createObjectURL(blob)
+
+      // Create a temporary link element to initiate download
+      const link = document.createElement('a')
+      link.href = url
+      link.download = 'relatorio_vendas.xlsx' // Set the desired filename
+      // Trigger a click on the link to start the download
+      link.click()
+
+      // Clean up the temporary link
+      link.remove()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   useEffect(() => {
     fetchItems()
     fetchOrder()
   }, [])
 
-  function CustomTollBar(Title: String) {
-    return (
-      <GridToolbarContainer>
-        <p className="table-title">{Title}</p>
-        <GridToolbarExport />
-      </GridToolbarContainer>
-    )
-  }
   return (
     <Container>
       <div className="items-wrapper">
@@ -236,17 +269,22 @@ export const OverView: FC<OverViewProps> = () => {
             width: '100%',
             maxHeight: 'max-content',
             color: '#FFF',
-            borderRadius: 9
+            borderRadius: 9,
+            display: 'flex',
+            flexDirection: 'column'
           }}
         >
+          <p className="table-title">
+            Vendas por itens
+            <FaDownload
+              onClick={() => {
+                fetchXLSX(true)
+              }}
+            />
+          </p>
           <DataGrid
             sx={{ fontSize: 14, color: '#FFF' }}
             rows={response}
-            slots={{
-              toolbar: () => {
-                return CustomTollBar('Vendas por itens')
-              }
-            }}
             columns={columns}
             initialState={{
               pagination: {
@@ -262,17 +300,23 @@ export const OverView: FC<OverViewProps> = () => {
             width: '100%',
             maxHeight: '50%',
             color: '#FFF',
-            borderRadius: 9
+            borderRadius: 9,
+            display: 'flex',
+            flexDirection: 'column'
           }}
         >
+          <p className="table-title">
+            Vendas geral
+            <FaDownload
+              onClick={() => {
+                fetchXLSX(false)
+              }}
+            />
+          </p>
+
           <DataGrid
             sx={{ fontSize: 14, color: '#FFF' }}
             rows={order}
-            slots={{
-              toolbar: () => {
-                return CustomTollBar('Vendas Totais')
-              }
-            }}
             columns={orderColumns}
             initialState={{
               pagination: {
