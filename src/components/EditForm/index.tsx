@@ -29,13 +29,15 @@ export const EditForm: FC<EditFormProps> = ({
   setEditItem
 }: EditFormProps) => {
   const [data] = useState(new FormData())
-  const [colorState, setColorState] = useState(String)
-  const [nameState, setName] = useState(String)
-  const [priceState, setPrice] = useState(Number)
+  const [colorState, setColorState] = useState(item.color)
+  const [nameState, setName] = useState(item.name)
+  const [priceState, setPrice] = useState(item.price)
+  const [keySequence, setKeySequence] = useState<string[]>([])
   const [isOpen, setIsOpen] = useState(false)
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    data.set('shortCut', keySequence.join(' + '))
     onSubmit(data)
   }
 
@@ -55,18 +57,24 @@ export const EditForm: FC<EditFormProps> = ({
         break
     }
     data.set(name, value)
-    const color = data.get('selectedColor') as string
-    if (color) setColorState(color)
   }
-  console.log(item)
-  console.log(item)
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    event.preventDefault()
+    // Add the pressed key to the key sequence
+    setKeySequence([...keySequence, event.key])
+  }
+
+  const handleKeyUp = () => {
+    // Reset the key sequence
+    setKeySequence([])
+  }
+
   useEffect(() => {
     data.set('name', nameState)
     data.set('price', priceState.toString())
     data.set('selectedColor', colorState)
-    setColorState(item.color)
-    setName(item.name)
-    setPrice(item.price)
+    data.set('shortCut', keySequence.join(' + '))
   }, [])
 
   // Function to toggle the isOpen state
@@ -122,10 +130,13 @@ export const EditForm: FC<EditFormProps> = ({
         <div>
           <input
             name="shortCut"
-            type="number"
-            value={'ShortCut'}
+            id="shortCut"
+            value={keySequence.join(' + ')}
+            type="text"
             placeholder="ShortCut"
-            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            onClick={handleKeyUp}
+            readOnly
           />
         </div>
       </FormContainer>

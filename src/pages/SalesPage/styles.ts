@@ -8,13 +8,13 @@ export const Container = styled.div`
   height: 100vh;
   .items-wrapper {
     grid-area: 'items-wrapper';
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 15px 0;
-    padding: 0 15px;
-    align-content: flex-start;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(150px, 1fr)
+    ); /* Responsive columns */
+    gap: 16px;
+    padding: 16px;
     max-height: 100vh;
     overflow-y: scroll;
     &::-webkit-scrollbar {

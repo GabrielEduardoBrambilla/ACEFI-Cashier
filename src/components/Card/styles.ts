@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 export const Container = styled.div<{ deleteHover?: boolean }>`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 150px;
   height: 150px;
   gap: 10px;
@@ -22,6 +23,8 @@ export const Container = styled.div<{ deleteHover?: boolean }>`
   cursor: pointer;
 
   .counter {
+    padding: 10px 0;
+    top: 0px;
     font-weight: bold;
     font-size: 18px;
     position: absolute;

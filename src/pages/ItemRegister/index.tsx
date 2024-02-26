@@ -1,12 +1,10 @@
 import { Form } from '../../components/Form/index.js'
 import { FC, useEffect, useState } from 'react'
-
 import { Container } from './styles.js'
 import { api } from '../../services/api.js'
 import { Card } from '../../components/Card/index.js'
 import { Navbar } from '../../components/Navbar/index.js'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
 import { EditForm } from '../../components/EditForm/index.js'
 
 interface ItemRegisterProps {}
@@ -20,8 +18,6 @@ interface Item {
 export const ItemRegister: FC<ItemRegisterProps> = () => {
   const [response, setResponse] = useState<Item[]>([])
   const [editItem, setEditItem] = useState<Item>()
-  const navigate = useNavigate()
-  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const fetchItems = () => {
     api
@@ -37,6 +33,7 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
     const nome = data.get('name') as string
     const preco = data.get('price') as string
     const color = data.get('selectedColor') as string
+    const shortCut = data.get('shortCut') as string
 
     if (!nome) {
       toast.error('Nome é obrigatório', {
@@ -81,7 +78,8 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
       .put(`/produtos/${editItem?.id}`, {
         name: nome,
         price: preco,
-        color: colorWithoutHash
+        color: colorWithoutHash,
+        shortCut: shortCut ? shortCut : null
       })
       .then(function () {
         toast.success('Item atualizdo com sucesso', {
@@ -189,9 +187,6 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
     fetchItems()
   }, [])
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen)
-  }
   return (
     <Container>
       <div className="items-wrapper">
@@ -201,7 +196,13 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
               setEditItem(item)
             }}
             deleteHover
-            counter={index < 9 ? index + 1 : null}
+            counter={
+              index < 18
+                ? index < 9
+                  ? index + 1
+                  : `Shift + ${index - 8}`
+                : undefined
+            }
             key={item.id}
             color={item.color}
             title={item.name}

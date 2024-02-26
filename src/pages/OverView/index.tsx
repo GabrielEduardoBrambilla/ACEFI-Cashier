@@ -3,17 +3,10 @@ import { Container } from './styles.js'
 import { api } from '../../services/api.js'
 import { Navbar } from '../../components/Navbar/index.js'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
-import {
-  DataGrid,
-  GridColDef,
-  GridToolbar,
-  GridToolbarContainer,
-  GridToolbarExport
-} from '@mui/x-data-grid'
-import { FaDownload, FaStore } from 'react-icons/fa'
+import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { FaDownload } from 'react-icons/fa'
 
 interface OverViewProps {}
 interface Item {
@@ -66,7 +59,6 @@ const orderColumns: GridColDef[] = [
 export const OverView: FC<OverViewProps> = () => {
   const [response, setResponse] = useState<Item[]>([])
   const [order, setOrder] = useState<Item[]>([])
-  const navigate = useNavigate()
 
   const fetchItems = () => {
     api
@@ -130,72 +122,7 @@ export const OverView: FC<OverViewProps> = () => {
         console.error(error)
       })
   }
-  function handleItemRegister(data: FormData) {
-    const nome = data.get('nome') as string
-    const preco = data.get('preco') as string
-    const color = data.get('selectedColor') as string
 
-    if (!nome) {
-      toast.error('Nome é obrigatório', {
-        position: 'bottom-left',
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: 'light'
-      })
-      return // Exit the function to prevent further execution
-    }
-
-    if (!preco) {
-      toast.error('Preço é obrigatório', {
-        position: 'bottom-left',
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: 'light'
-      })
-      return // Exit the function to prevent further execution
-    }
-    if (!color) {
-      toast.error('Cor é obrigatória', {
-        position: 'bottom-left',
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: 'light'
-      })
-      return // Exit the function to prevent further execution
-    }
-    const colorWithoutHash = color.substring(1) // Remove the "#" symbol
-
-    api
-      .post('/produtos', {
-        name: nome,
-        price: preco,
-        color: colorWithoutHash
-      })
-      .then(function () {
-        toast.success('Item registrado com sucesso', {
-          position: 'bottom-left',
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: 'light'
-        })
-        fetchItems()
-      })
-      .catch(function (error) {
-        console.error(error)
-      })
-  }
   function handleItemDeletion(item: any) {
     const id = item.id
     api
