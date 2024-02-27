@@ -63,6 +63,12 @@ export const EditForm: FC<EditFormProps> = ({
     event.preventDefault()
     // Add the pressed key to the key sequence
     setKeySequence([...keySequence, event.key])
+    if (event.key == 'Escape') {
+      setKeySequence([])
+    }
+    if (event.key == 'Backspace') {
+      setKeySequence([])
+    }
   }
 
   const handleKeyUp = () => {

@@ -45,7 +45,7 @@ html:root{
   #toggleButton{
     display: none;
   }
-  transition: all 2.5s ease-in;
+  /* transition: all 2.5s ease-in; */
 
   button:hover, a:hover {
     filter: brightness(0.9)

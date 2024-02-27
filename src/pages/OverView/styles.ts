@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 60% 40%;
   grid-template-areas: 'items-wrapper' 'right-section';
   height: 100vh;
   .items-wrapper {
@@ -16,6 +16,7 @@ export const Container = styled.div`
     justify-content: center;
     max-height: 100vh;
     overflow-y: auto;
+    transition: all 300ms ease-in;
     &::-webkit-scrollbar {
       width: 12px;
     }
@@ -58,6 +59,7 @@ export const Container = styled.div`
       height: 80%;
       justify-content: center;
     }
+
     .table-title {
       display: flex;
       color: #000;
