@@ -4,8 +4,6 @@ import { FaStore } from 'react-icons/fa'
 import { RiLogoutCircleRLine } from 'react-icons/ri'
 import { ImHome3 } from 'react-icons/im'
 import { Link, useNavigate } from 'react-router-dom'
-import { api } from '../../services/api'
-import { toast } from 'react-toastify'
 import { useAuth } from '../../hooks/auth.js'
 import { DiDatabase } from 'react-icons/di'
 
