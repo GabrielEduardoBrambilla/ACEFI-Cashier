@@ -123,27 +123,6 @@ export const OverView: FC<OverViewProps> = () => {
       })
   }
 
-  function handleItemDeletion(item: any) {
-    const id = item.id
-    api
-      .delete(`/produtos/${id}`, {})
-      .then(function () {
-        toast.warning('Item deletado com sucesso', {
-          position: 'bottom-left',
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: 'light'
-        })
-        fetchItems()
-      })
-      .catch(function (error) {
-        console.error(error)
-      })
-  }
-
   const fetchXLSX = async (items: boolean) => {
     try {
       toast.info('Iniciando download, aguarde um momento', {
@@ -223,9 +202,9 @@ export const OverView: FC<OverViewProps> = () => {
         </div>
         <div
           style={{
-            height: 400,
+            height: 500,
             width: '100%',
-            maxHeight: '50%',
+            maxHeight: 400,
             color: '#FFF',
             borderRadius: 9,
             display: 'flex',
@@ -256,6 +235,37 @@ export const OverView: FC<OverViewProps> = () => {
       </div>
       <div className="right-section">
         <Navbar />
+        <div
+          style={{
+            height: 350,
+            width: '100%',
+            maxHeight: 'max-content',
+            color: '#FFF',
+            borderRadius: 9,
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
+          <p className="table-title">
+            Vendas por itens
+            <FaDownload
+              onClick={() => {
+                fetchXLSX(true)
+              }}
+            />
+          </p>
+          <DataGrid
+            sx={{ fontSize: 14, color: '#000' }}
+            rows={response}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 }
+              }
+            }}
+            pageSizeOptions={[5, 10]}
+          />
+        </div>
       </div>
     </Container>
   )

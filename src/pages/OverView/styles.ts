@@ -12,7 +12,7 @@ export const Container = styled.div`
     gap: 16px;
     margin: 15px 0;
     padding: 0 16px 16px 15px;
-    align-content: space-between;
+    /* align-content: space-around; */
     justify-content: center;
     max-height: 100vh;
     overflow-y: auto;
@@ -28,6 +28,23 @@ export const Container = styled.div`
     &::-webkit-scrollbar-track {
       background-color: transparent;
     }
+    .MuiTablePagination-root,
+    .MuiSvgIcon-root {
+      color: #fff !important;
+    }
+    .table-title {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      font-size: 18px;
+      font-weight: 500;
+      text-align: left;
+      justify-self: start;
+      margin: 16px 0;
+      svg {
+        cursor: pointer;
+      }
+    }
   }
   .right-section {
     background-color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
@@ -41,22 +58,19 @@ export const Container = styled.div`
       height: 80%;
       justify-content: center;
     }
-  }
-  .MuiTablePagination-root,
-  .MuiSvgIcon-root {
-    color: #fff !important;
-  }
-  .table-title {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    font-size: 18px;
-    font-weight: 500;
-    text-align: left;
-    justify-self: start;
-    margin: 16px 0;
-    svg {
-      cursor: pointer;
+    .table-title {
+      display: flex;
+      color: #000;
+      gap: 1rem;
+      align-items: center;
+      font-size: 18px;
+      font-weight: 500;
+      text-align: left;
+      justify-self: start;
+      margin: 16px 0;
+      svg {
+        cursor: pointer;
+      }
     }
   }
 `
