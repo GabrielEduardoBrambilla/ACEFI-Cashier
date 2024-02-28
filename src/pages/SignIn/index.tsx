@@ -1,6 +1,6 @@
 import { Form } from '../../components/Form'
 import { FC } from 'react'
-import logo from '../../assets/HOPIC_SHARP.png'
+import logo from '../../assets/Logo.png'
 import { Container } from './styles'
 import { useAuth } from '../../hooks/auth.js'
 import { toast } from 'react-toastify'
@@ -43,12 +43,23 @@ export const SignIn: FC<SignInProps> = () => {
     <Container className="flex justify-center  h-[100vh] bg-purple-700">
       <div className="logo-section">
         <img src={logo} alt="" />
-        <div className="logo-text">
-          <p> S</p>
-          <p> T</p>
-          <p> O</p>
-          <p> R</p>
-          <p> E</p>
+        <div className="text-wrapper">
+          <div className="logo-text">
+            <p> C</p>
+            <p> A</p>
+            <p> I</p>
+            <p> X</p>
+            <p> A</p>
+          </div>
+          <div className="logo-text">
+            <p> B</p>
+            <p> E</p>
+            <p> B</p>
+            <p> I</p>
+            <p> D</p>
+            <p> A</p>
+            <p> S</p>
+          </div>
         </div>
       </div>
       <div className="form-section">

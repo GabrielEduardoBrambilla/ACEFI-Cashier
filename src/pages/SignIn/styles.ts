@@ -10,19 +10,25 @@ export const Container = styled.div`
   justify-content: space-between;
   background-color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
 
-  .logo-section {
+  .text-wrapper {
     display: flex;
     flex-direction: column;
+    justify-content: left;
+    align-items: left;
+  }
+  .logo-section {
+    display: flex;
+    /* flex-direction: column; */
     justify-content: center;
+    align-items: center;
     height: 100%;
-    margin: 10px;
 
     .logo-text {
       display: flex;
-      justify-content: space-between;
+      justify-content: left;
       color: ${({ theme }) => theme.COLORS.FONT[200]};
       width: 100%;
-      padding: 0 15px;
+      gap: 20px;
       letter-spacing: normal;
       font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
       font-size: 48px;
@@ -31,19 +37,10 @@ export const Container = styled.div`
       line-height: normal;
     }
     > img {
-      align-self: center;
-      flex-shrink: 0;
-      width: 95%;
-      margin: 0 0 0 10px;
-      max-width: 489.365px;
-      max-height: 225.424px;
-
-      font-weight: bold;
-
-      object-fit: cover;
-      border-radius: 90px;
-
-      margin: 4px 0 0 0;
+      justify-content: center;
+      width: 400px;
+      min-height: 400px;
+      object-fit: contain;
     }
   }
   .form-section {
