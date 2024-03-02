@@ -7,6 +7,7 @@ interface Item {
   id: number
   name: string
   price: number
+  shortCut: string
   color: string
 }
 interface EditFormProps {

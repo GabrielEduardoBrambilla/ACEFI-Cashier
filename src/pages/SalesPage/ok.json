@@ -1,0 +1,83 @@
+[
+  {
+      "id": 87,
+      "user_id": 1,
+      "name": "Coca",
+      "price": 5,
+      "quantity": 0,
+      "color": "df1616",
+      "imageAddress": null,
+      "shortCut": "Shift + z"
+  },
+  {
+      "id": 88,
+      "user_id": 1,
+      "name": "Sushi",
+      "price": 50,
+      "quantity": 0,
+      "color": "bf36b4",
+      "imageAddress": null,
+      "shortCut": "Shift + s"
+  },
+  {
+      "id": 89,
+      "quantity": 0,
+      "user_id": 1,
+      "name": "Bola",
+      "price": 5,
+      "color": "1032e0",
+      "imageAddress": null,
+      "shortCut": "Shift + f"
+  },
+  {
+      "id": 111,
+      "user_id": 1,
+      "name": "computador",
+      "price": 12,
+      "color": "9c4f4f",
+      "imageAddress": null,
+      "quantity": 0,
+      "shortCut": "Shift + l"
+  },
+ 
+  {
+      "id": 131,
+      "user_id": 1,
+      "name": "Cralos",
+      "price": 5,
+      "color": "df2020",
+      "imageAddress": null,
+      "quantity": 0,
+      "shortCut": "Shift + d"
+  },
+  {
+      "id": 132,
+      "user_id": 1,
+      "name": "Cralos",
+      "price": 5,
+      "color": "df2020",
+      "quantity": 0,
+      "imageAddress": null,
+      "shortCut": "Shift + c"
+  },
+  {
+      "id": 133,
+      "user_id": 1,
+      "name": "Cralos",
+      "price": 5,
+      "quantity": 0,
+      "color": "df2020",
+      "imageAddress": null,
+      "shortCut": "Shift + a"
+  },
+  {
+      "id": 134,
+      "user_id": 1,
+      "name": "Vitor",
+      "price": 5,
+      "quantity": 0,
+      "color": "df2020",
+      "imageAddress": null,
+      "shortCut": "Shift + b"
+  }
+]

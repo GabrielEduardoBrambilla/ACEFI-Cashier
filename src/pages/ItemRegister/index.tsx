@@ -13,6 +13,7 @@ interface Item {
   name: string
   price: number
   color: string
+  shortCut: string
 }
 
 export const ItemRegister: FC<ItemRegisterProps> = () => {
@@ -190,19 +191,13 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
   return (
     <Container>
       <div className="items-wrapper">
-        {response.map((item, index) => (
+        {response.map(item => (
           <Card
             onClick={() => {
               setEditItem(item)
             }}
             deleteHover
-            counter={
-              index < 18
-                ? index < 9
-                  ? index + 1
-                  : `Shift + ${index - 8}`
-                : undefined
-            }
+            counter={item.shortCut}
             key={item.id}
             color={item.color}
             title={item.name}

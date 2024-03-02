@@ -7,10 +7,13 @@ import { toast } from 'react-toastify'
 
 interface Item {
   quantity: number
+  user_id: number
   id: number
   name: string
   price: number
   color: string // Added the color property
+  imageAddress: null // Added the color property
+  shortCut: string[] // Added the color property
 }
 
 interface SalesPageProps {}
@@ -20,35 +23,126 @@ export const SalesPage: FC<SalesPageProps> = () => {
   const [response, setResponse] = useState<Item[]>([])
   const [receivedAmount, setReceivedAmount] = useState<string>('')
   const [isInReceivedInput, setIsInReceivedInput] = useState(false)
+  const [keySequence, setKeySequence] = useState<string[]>([])
   let changeAmount: string = ''
 
   const receivedAmountRef = useRef<HTMLInputElement | null>(null)
 
   const fetchItems = () => {
-    api
-      .get('/produtos')
-      .then(function (response) {
-        setResponse(response.data)
-      })
-      .catch(function (error) {
-        console.error(error)
-      })
-  }
+    // api
+    //   .get('/produtos')
+    //   .then(function (response) {
+    //     setResponse(response.data)
+    //   })
+    //   .catch(function (error) {
+    //     console.error(error)
+    //   })
+    setResponse([
+      {
+        id: 87,
+        user_id: 1,
+        name: 'Coca',
+        price: 5,
+        quantity: 0,
+        color: 'df1616',
+        imageAddress: null,
+        shortCut: ['1']
+      },
 
+      {
+        id: 88,
+        user_id: 1,
+        name: 'Sushi',
+        price: 50,
+        quantity: 0,
+        color: 'bf36b4',
+        imageAddress: null,
+        shortCut: ['Shift', ' S']
+      },
+      {
+        id: 888,
+        user_id: 1,
+        name: 'Tost',
+        price: 35,
+        quantity: 0,
+        color: 'bf86b4',
+        imageAddress: null,
+        shortCut: ['s']
+      },
+      {
+        id: 89,
+        quantity: 0,
+        user_id: 1,
+        name: 'Bola',
+        price: 5,
+        color: '1032e0',
+        imageAddress: null,
+        shortCut: ['Shift', 'F']
+      },
+      {
+        id: 111,
+        user_id: 1,
+        name: 'computador',
+        price: 12,
+        color: '9c4f4f',
+        imageAddress: null,
+        quantity: 0,
+        shortCut: ['Shift', 'A']
+      },
+
+      {
+        id: 131,
+        user_id: 1,
+        name: 'Cralos',
+        price: 5,
+        color: 'df2020',
+        imageAddress: null,
+        quantity: 0,
+        shortCut: ['Shift', 'D']
+      },
+      {
+        id: 132,
+        user_id: 1,
+        name: 'Cralos',
+        price: 5,
+        color: 'df2020',
+        quantity: 0,
+        imageAddress: null,
+        shortCut: ['Shift', 'C']
+      },
+      {
+        id: 133,
+        user_id: 1,
+        name: 'Cralos',
+        price: 5,
+        quantity: 0,
+        color: 'df2020',
+        imageAddress: null,
+        shortCut: ['Shift', 'G']
+      },
+      {
+        id: 134,
+        user_id: 1,
+        name: 'Vitor',
+        price: 5,
+        quantity: 0,
+        color: 'df2020',
+        imageAddress: null,
+        shortCut: ['Shift', 'B']
+      }
+    ])
+  }
   function handleAddItem(item_id: number) {
     const existingItem = itemsOrder.find(orderItem => orderItem.id === item_id)
 
     if (existingItem) {
-      const updatedItems = itemsOrder.map(orderItem =>
-        orderItem.id === item_id
-          ? { ...orderItem, quantity: orderItem.quantity + 1 }
-          : orderItem
-      )
-      setItemsOrder(updatedItems)
+      handleIncreaseQuantity(item_id)
+      setKeySequence([])
     } else {
       const newItem = response.find(item => item.id === item_id)
       if (newItem) {
         setItemsOrder(prevOrder => [...prevOrder, { ...newItem, quantity: 1 }])
+        setKeySequence([])
       }
     }
   }
@@ -134,24 +228,61 @@ export const SalesPage: FC<SalesPageProps> = () => {
   }
 
   useEffect(() => {
-    fetchItems()
+    const handleKeyDown = (event: KeyboardEvent) => {
+      event.preventDefault()
 
-    const handleKeyPress = (event: KeyboardEvent) => {
-      if (!isInReceivedInput) {
-        const keyNumber = parseInt(event.key)
-        if (keyNumber >= 1 && keyNumber <= 9 && response[keyNumber - 1]) {
-          const item_idToAdd = response[keyNumber - 1].id
-          handleAddItem(item_idToAdd)
+      const itemsWithPressedKey = response.filter(item => {
+        return item.shortCut.includes(event.key)
+      })
+
+      for (const item of itemsWithPressedKey) {
+        const { shortCut, id } = item
+        const pressedKeys = shortCut.map(key => key.toLowerCase())
+        const pressedKeyIndex = pressedKeys.indexOf(event.key.toLowerCase())
+        if (shortCut.length > 1) {
+          const nextKey = pressedKeys[pressedKeyIndex + 1]
+          console.log('Chegou quase la')
+          if (
+            pressedKeys.slice(pressedKeyIndex + 1).every((key, index) => {
+              const nextEventKey = index === 0 ? nextKey : shortCut[index + 1]
+              const nextEventKeyLower = nextEventKey.toLowerCase()
+              const isModifier = ['shift', 'ctrl', 'alt'].includes(key)
+              const isPressed = isModifier
+                ? event.getModifierState(key)
+                : event.key.toLowerCase() === nextEventKeyLower
+              return isPressed
+            })
+          ) {
+            console.log('Chegou la')
+            handleAddItem(id)
+            event.preventDefault() // Prevent default browser behavior for the shortcut keys
+          }
+        } else {
+          if (shortCut[0].toLowerCase == event.key.toLowerCase) {
+            console.log('Chegou la, UMA tecla só')
+
+            handleAddItem(id)
+          }
         }
       }
     }
-
     const handleTabKeyPress = (event: KeyboardEvent) => {
       if (event.key === 'Tab' && receivedAmountRef.current) {
-        event.preventDefault()
+        // event.preventDefault()
         receivedAmountRef.current.focus()
       }
     }
+    window.addEventListener('keydown', handleKeyDown)
+    // window.addEventListener('keydown', handleTabKeyPress)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      // window.removeEventListener('keydown', handleTabKeyPress)
+    }
+  }, [keySequence])
+
+  useEffect(() => {
+    fetchItems()
 
     const handleQKeyPress = (event: KeyboardEvent) => {
       if (event.key === 'q' && receivedAmountRef.current) {
@@ -160,25 +291,22 @@ export const SalesPage: FC<SalesPageProps> = () => {
       }
     }
 
-    window.addEventListener('keydown', handleKeyPress)
-    window.addEventListener('keydown', handleTabKeyPress)
     window.addEventListener('keydown', handleQKeyPress)
 
     return () => {
-      window.removeEventListener('keydown', handleKeyPress)
-      window.removeEventListener('keydown', handleTabKeyPress)
       window.removeEventListener('keydown', handleQKeyPress)
     }
-  }, [response])
+  }, [])
 
   return (
     <Container>
       <div className="items-wrapper">
-        {response.map((item, index) => (
-          <div key={item.id} onClick={() => handleAddItem(item.id)}>
+        {response.map(item => (
+          <div key={item.id}>
             <Card
+              onClick={() => handleAddItem(item.id)}
               color={item.color}
-              counter={index < 9 ? index + 1 : null}
+              counter={item.shortCut.join(' + ')}
               title={item.name}
               price={item.price}
             />
