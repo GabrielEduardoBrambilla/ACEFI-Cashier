@@ -123,6 +123,8 @@ export const Form: FC<FormProps> = ({
             <div>
               <input
                 name={'shortCut'}
+                minLength={1}
+                maxLength={1}
                 type={'text'}
                 placeholder={'Atalho: Podendo ser qualquer letra ou numero'}
                 onChange={handleInputChange}

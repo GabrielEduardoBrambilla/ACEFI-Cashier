@@ -211,13 +211,7 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
               setEditItem(item)
             }}
             deleteHover
-            counter={
-              index < 18
-                ? index < 9
-                  ? index + 1
-                  : `Shift + ${index - 8}`
-                : undefined
-            }
+            counter={item.shortCut}
             key={item.id}
             color={item.color}
             title={item.name}

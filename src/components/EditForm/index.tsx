@@ -33,6 +33,7 @@ export const EditForm: FC<EditFormProps> = ({
   const [colorState, setColorState] = useState(item.color)
   const [nameState, setName] = useState(item.name)
   const [priceState, setPrice] = useState(item.price)
+  const [shortCutState, setShortCutState] = useState(item.shortCut)
   const [keySequence, setKeySequence] = useState<string[]>([])
   const [isOpen, setIsOpen] = useState(false)
 
@@ -56,32 +57,35 @@ export const EditForm: FC<EditFormProps> = ({
       case 'selectedColor':
         setColorState(value)
         break
+      case 'shortCut':
+        setShortCutState(value)
+        break
     }
     data.set(name, value)
   }
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    event.preventDefault()
-    // Add the pressed key to the key sequence
-    setKeySequence([...keySequence, event.key])
-    if (event.key == 'Escape') {
-      setKeySequence([])
-    }
-    if (event.key == 'Backspace') {
-      setKeySequence([])
-    }
-  }
+  // const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  //   event.preventDefault()
+  //   // Add the pressed key to the key sequence
+  //   setKeySequence([...keySequence, event.key])
+  //   if (event.key == 'Escape') {
+  //     setKeySequence([])
+  //   }
+  //   if (event.key == 'Backspace') {
+  //     setKeySequence([])
+  //   }
+  // }
 
-  const handleKeyUp = () => {
-    // Reset the key sequence
-    setKeySequence([])
-  }
+  // const handleKeyUp = () => {
+  //   // Reset the key sequence
+  //   setKeySequence([])
+  // }
 
   useEffect(() => {
     data.set('name', nameState)
     data.set('price', priceState.toString())
     data.set('selectedColor', colorState)
-    data.set('shortCut', keySequence.join(' + '))
+    data.set('shortCut', shortCutState.toString())
   }, [])
 
   // Function to toggle the isOpen state
@@ -126,11 +130,25 @@ export const EditForm: FC<EditFormProps> = ({
           <input
             name="shortCut"
             type="text"
-            value={priceState}
-            placeholder="Preço"
+            value={shortCutState}
+            min={1}
+            maxLength={1}
+            placeholder="ShortCut"
             onChange={handleInputChange}
           />
         </div>
+        {/* <div>
+          <input
+            name="shortCut"
+            id="shortCut"
+            value={keySequence.join(' + ')}
+            type="text"
+            placeholder="ShortCut"
+            onKeyDown={handleKeyDown}
+            onClick={handleKeyUp}
+            readOnly
+          />
+        </div> */}
         <div className="newProd">
           <input
             id="color_input"
@@ -142,18 +160,6 @@ export const EditForm: FC<EditFormProps> = ({
           <label htmlFor="color_input">
             <p>{colorState ? colorState : 'Selecione um cor'}</p>
           </label>
-        </div>
-        <div>
-          <input
-            name="shortCut"
-            id="shortCut"
-            value={keySequence.join(' + ')}
-            type="text"
-            placeholder="ShortCut"
-            onKeyDown={handleKeyDown}
-            onClick={handleKeyUp}
-            readOnly
-          />
         </div>
       </FormContainer>
       <div className="buttons">
