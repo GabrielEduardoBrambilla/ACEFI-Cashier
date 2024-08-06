@@ -49,7 +49,7 @@ export const FormContainer = styled.form<{ product?: boolean }>`
         props.product
           ? 'unset'
           : 'drop-shadow(-2px 4px 4px rgba(0, 0, 0, 0.25))'};
-      text-transform: capitalize;
+      /* text-transform: capitalize; */
       height: 100%;
       width: 100%;
       border-bottom: 5px solid

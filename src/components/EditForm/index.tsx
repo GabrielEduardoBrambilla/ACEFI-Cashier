@@ -8,6 +8,7 @@ interface Item {
   name: string
   price: number
   color: string
+  shortCut: string
 }
 interface EditFormProps {
   onSubmit: (formData: FormData) => void
@@ -116,6 +117,15 @@ export const EditForm: FC<EditFormProps> = ({
           <input
             name="price"
             type="number"
+            value={priceState}
+            placeholder="Preço"
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <input
+            name="shortCut"
+            type="text"
             value={priceState}
             placeholder="Preço"
             onChange={handleInputChange}

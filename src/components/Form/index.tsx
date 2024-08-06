@@ -34,6 +34,12 @@ export const Form: FC<FormProps> = ({
   const warningDisplay = warningMsg ? true : false
   const [ColorDisplay, setColorDisplay] = useState('')
   const [isOpen, setIsOpen] = useState(false)
+  const title1Captalized = input1Title
+    ? input1Title?.charAt(0).toUpperCase() + input1Title?.slice(1)
+    : ''
+  const title2Captalized = input2Title
+    ? input2Title?.charAt(0).toUpperCase() + input2Title?.slice(1)
+    : ''
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -66,7 +72,7 @@ export const Form: FC<FormProps> = ({
           <input
             name={input1Title || 'email'}
             type={input1Type || 'email'}
-            placeholder={input1Title || 'E-mail'}
+            placeholder={input1Title ? title1Captalized : 'E-mail'}
             onChange={handleInputChange}
           />
         </div>
@@ -74,7 +80,7 @@ export const Form: FC<FormProps> = ({
           <input
             name={input2Title || 'password'}
             type={input2Type || 'password'}
-            placeholder={input2Title || 'Senha'}
+            placeholder={input2Title ? title2Captalized : 'Senha'}
             onChange={handleInputChange}
           />
         </div>
@@ -113,17 +119,27 @@ export const Form: FC<FormProps> = ({
         )}
 
         {newProduct && (
-          <div className="newProd">
-            <input
-              id="color_input"
-              type="color"
-              name="selectedColor"
-              onChange={handleInputChange}
-            />
-            <label htmlFor="color_input">
-              <p>{ColorDisplay ? ColorDisplay : 'Selecione um cor'}</p>
-            </label>
-          </div>
+          <>
+            <div>
+              <input
+                name={'shortCut'}
+                type={'text'}
+                placeholder={'Atalho: Podendo ser qualquer letra ou numero'}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="newProd">
+              <input
+                id="color_input"
+                type="color"
+                name="selectedColor"
+                onChange={handleInputChange}
+              />
+              <label htmlFor="color_input">
+                <p>{ColorDisplay ? ColorDisplay : 'Selecione um cor'}</p>
+              </label>
+            </div>
+          </>
         )}
       </FormContainer>
       <button type="submit" form="form">

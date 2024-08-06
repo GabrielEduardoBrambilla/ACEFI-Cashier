@@ -13,6 +13,7 @@ interface Item {
   name: string
   price: number
   color: string
+  shortCut: string
 }
 
 export const ItemRegister: FC<ItemRegisterProps> = () => {
@@ -101,6 +102,7 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
     const nome = data.get('nome') as string
     const preco = data.get('preco') as string
     const color = data.get('selectedColor') as string
+    const shortCut = data.get('shortCut') as string
 
     if (!nome) {
       toast.error('Nome é obrigatório', {
@@ -139,13 +141,26 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
       })
       return // Exit the function to prevent further execution
     }
+    if (!shortCut) {
+      toast.error('O atalho é obrigatória', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
+      return // Exit the function to prevent further execution
+    }
     const colorWithoutHash = color.substring(1) // Remove the "#" symbol
 
     api
       .post('/produtos', {
         name: nome,
         price: preco,
-        color: colorWithoutHash
+        color: colorWithoutHash,
+        shortCut: shortCut
       })
       .then(function () {
         toast.success('Item registrado com sucesso', {
