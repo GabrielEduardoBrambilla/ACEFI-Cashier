@@ -11,6 +11,7 @@ interface Item {
   name: string
   price: number
   color: string // Added the color property
+  shortCut: string
 }
 
 interface SalesPageProps {}
@@ -138,6 +139,16 @@ export const SalesPage: FC<SalesPageProps> = () => {
 
     const handleKeyPress = (event: KeyboardEvent) => {
       if (!isInReceivedInput) {
+        console.log(event.key)
+        console.log(event.key)
+        console.log(event.key)
+        response.forEach(item => {
+          if (item.shortCut == event.key.toString()) {
+            console.log('Found key')
+            handleAddItem(item.id)
+          }
+          console.log('Item shortCut ' + item.shortCut)
+        })
         const keyNumber = parseInt(event.key)
         if (keyNumber >= 1 && keyNumber <= 9 && response[keyNumber - 1]) {
           const item_idToAdd = response[keyNumber - 1].id
