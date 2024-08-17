@@ -76,10 +76,20 @@ export const Container = styled.div`
         grid-column: 1 / -1;
         td {
           font-size: 14px;
-
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
           flex: 1; /* Allow the items to expand and share equal width */
           border-radius: 10px;
           padding: 2px; /* Adjust padding as needed */
+
+          .counterPlus:hover {
+            color: green;
+          }
+          .counterMinus:hover {
+            color: red;
+          }
         }
         &:nth-child(even) {
           background-color: ${({ theme }) =>
@@ -104,6 +114,7 @@ export const Container = styled.div`
         background-color: transparent;
         background-color: ${({ theme }) => theme.COLORS.CONTRAST[100]};
         opacity: 0.8;
+        padding: 0 4px;
         text-align: center;
         &::placeholder {
           color: ${({ theme }) => theme.COLORS.FONT[100]};

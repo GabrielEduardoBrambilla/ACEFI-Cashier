@@ -4,6 +4,8 @@ import { Card } from '../../components/Card/index.js'
 import { Navbar } from '../../components/Navbar/index.js'
 import { api } from '../../services/api.js'
 import { toast } from 'react-toastify'
+import { FaMinus } from 'react-icons/fa'
+import { FaPlus } from 'react-icons/fa'
 
 interface Item {
   quantity: number
@@ -29,6 +31,11 @@ export const SalesPage: FC<SalesPageProps> = () => {
     api
       .get('/produtos')
       .then(function (response) {
+        console.log(response.data)
+        console.log(response.data)
+        response.data.sort((a: { shortCut: any }, b: { shortCut: any }) =>
+          a.shortCut.localeCompare(b.shortCut)
+        )
         setResponse(response.data)
       })
       .catch(function (error) {
@@ -149,11 +156,11 @@ export const SalesPage: FC<SalesPageProps> = () => {
           }
           console.log('Item shortCut ' + item.shortCut)
         })
-        const keyNumber = parseInt(event.key)
-        if (keyNumber >= 1 && keyNumber <= 9 && response[keyNumber - 1]) {
-          const item_idToAdd = response[keyNumber - 1].id
-          handleAddItem(item_idToAdd)
-        }
+        // const keyNumber = parseInt(event.key)
+        // if (keyNumber >= 1 && keyNumber <= 9 && response[keyNumber - 1]) {
+        //   const item_idToAdd = response[keyNumber - 1].id
+        //   handleAddItem(item_idToAdd)
+        // }
       }
     }
 
@@ -180,7 +187,7 @@ export const SalesPage: FC<SalesPageProps> = () => {
       window.removeEventListener('keydown', handleTabKeyPress)
       window.removeEventListener('keydown', handleQKeyPress)
     }
-  }, [response])
+  }, [])
 
   return (
     <Container>
@@ -189,7 +196,7 @@ export const SalesPage: FC<SalesPageProps> = () => {
           <div key={item.id} onClick={() => handleAddItem(item.id)}>
             <Card
               color={item.color}
-              counter={index < 9 ? index + 1 : null}
+              counter={item.shortCut.toUpperCase()}
               title={item.name}
               price={item.price}
             />
@@ -210,13 +217,20 @@ export const SalesPage: FC<SalesPageProps> = () => {
             {itemsOrder.map(orderItem => (
               <tr key={orderItem.id}>
                 <td>{orderItem.name}</td>
-                <td>
-                  <button onClick={() => handleDecreaseQuantity(orderItem.id)}>
-                    -
+
+                <td className="counterBtnTD">
+                  <button
+                    className="counterMinus"
+                    onClick={() => handleDecreaseQuantity(orderItem.id)}
+                  >
+                    <FaMinus />
                   </button>
-                  {orderItem.quantity}
-                  <button onClick={() => handleIncreaseQuantity(orderItem.id)}>
-                    +
+                  <span>{orderItem.quantity}</span>
+                  <button
+                    className="counterPlus"
+                    onClick={() => handleIncreaseQuantity(orderItem.id)}
+                  >
+                    <FaPlus />
                   </button>
                 </td>
                 <td>{orderItem.price}</td>
@@ -239,7 +253,7 @@ export const SalesPage: FC<SalesPageProps> = () => {
                     className="received"
                     ref={receivedAmountRef}
                     type="number"
-                    placeholder="Valor recebido"
+                    placeholder="Valor"
                     tabIndex={1}
                     onFocus={() => setIsInReceivedInput(true)} // Set the flag when the input is focused
                     onBlur={() => setIsInReceivedInput(false)} // Reset the flag when the input loses focus
