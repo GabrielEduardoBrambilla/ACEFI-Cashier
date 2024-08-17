@@ -48,7 +48,6 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
       })
       return // Exit the function to prevent further execution
     }
-
     if (!preco) {
       toast.error('Preço é obrigatório', {
         position: 'bottom-left',
@@ -73,14 +72,31 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
       })
       return // Exit the function to prevent further execution
     }
-    const colorWithoutHash = color.substring(1) // Remove the "#" symbol
+    if (!shortCut) {
+      toast.error('ShortCut é obrigatória', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light'
+      })
+      return // Exit the function to prevent further execution
+    }
 
+    const colorWithoutHash = color[0] == '#' ? color.substring(1) : color // Remove the "#" symbol
+    console.log(editItem?.id)
+    console.log(nome)
+    console.log(preco)
+    console.log(colorWithoutHash)
+    console.log(shortCut)
     api
       .put(`/produtos/${editItem?.id}`, {
         name: nome,
         price: preco,
         color: colorWithoutHash,
-        shortCut: shortCut ? shortCut : null
+        shortCut: shortCut
       })
       .then(function () {
         toast.success('Item atualizdo com sucesso', {

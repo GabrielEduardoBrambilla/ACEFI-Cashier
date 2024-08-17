@@ -39,7 +39,7 @@ export const EditForm: FC<EditFormProps> = ({
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    data.set('shortCut', keySequence.join(' + '))
+    data.set('shortCut', shortCutState)
     onSubmit(data)
   }
 
@@ -58,6 +58,7 @@ export const EditForm: FC<EditFormProps> = ({
         setColorState(value)
         break
       case 'shortCut':
+        console.log('Shortcut' + value)
         setShortCutState(value)
         break
     }
