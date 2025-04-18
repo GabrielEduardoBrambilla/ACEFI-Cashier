@@ -1,12 +1,12 @@
 import {
   createContext,
+  ReactNode,
   useContext,
-  useState,
   useEffect,
-  ReactNode
+  useState
 } from 'react'
-import { api } from '../services/api'
 import { toast } from 'react-toastify'
+import { api } from '../services/api'
 
 interface User {
   id: number

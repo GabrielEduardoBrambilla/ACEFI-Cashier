@@ -1,11 +1,11 @@
-import { Form } from '../../components/Form/index.js'
 import { FC, useEffect, useState } from 'react'
-import { Container } from './styles.js'
-import { api } from '../../services/api.js'
-import { Card } from '../../components/Card/index.js'
-import { Navbar } from '../../components/Navbar/index.js'
 import { toast } from 'react-toastify'
+import { Card } from '../../components/Card/index.js'
 import { EditForm } from '../../components/EditForm/index.js'
+import { Form } from '../../components/Form/index.js'
+import { Navbar } from '../../components/Navbar/index.js'
+import { api } from '../../services/api.js'
+import { Container } from './styles.js'
 
 interface ItemRegisterProps {}
 interface Item {
@@ -163,7 +163,7 @@ export const ItemRegister: FC<ItemRegisterProps> = () => {
         console.error(error)
       })
   }
-  function handleItemDeletion(item: any) {
+  function handleItemDeletion(item: Item) {
     const id = item.id
     api
       .delete(`/produtos/${id}`, {})

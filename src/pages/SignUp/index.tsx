@@ -1,10 +1,10 @@
-import { Form } from '../../components/Form/index.js'
 import { FC } from 'react'
-import logo from '../../assets/HOPIC_SHARP.png'
-import { Container } from './styles.js'
-import { api } from '../../services/api.js'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import logo from '../../assets/HOPIC_SHARP.png'
+import { Form } from '../../components/Form/index.js'
+import { api } from '../../services/api.js'
+import { Container } from './styles.js'
 // import { Modal } from '../../components/Modal/'
 interface SignUpProps {}
 
@@ -47,6 +47,10 @@ export const SignUp: FC<SignUpProps> = () => {
         password: password
       })
       .then(() => {
+        console.log(name)
+        console.log(email)
+        console.log(password)
+
         toast.success('Conta registrada com sucesso', {
           position: 'bottom-left',
           autoClose: 3000,
